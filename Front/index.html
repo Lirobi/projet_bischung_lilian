@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inscription</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section
+        id="signup-section"
+        class="card form-card"
+        aria-labelledby="form-title"
+      >
+        <h1 id="form-title">Créer un compte</h1>
+
+        <form id="signup-form" novalidate>
+          <div class="field-grid">
+            <label class="field">
+              <span>Login</span>
+              <input
+                type="text"
+                id="login"
+                name="login"
+                placeholder="Votre login"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span>Mot de passe</span>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Votre mot de passe"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span>Confirmation du mot de passe</span>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirmez votre mot de passe"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span>Nom</span>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Votre nom"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span>Prénom</span>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder="Votre prénom"
+                required
+              />
+            </label>
+
+            <label class="field full-width">
+              <span>Adresse</span>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                placeholder="Votre adresse"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span>Email</span>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="exemple@email.com"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span>Téléphone</span>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="Votre numéro"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span>Date de naissance</span>
+              <input type="date" id="birthDate" name="birthDate" required />
+            </label>
+          </div>
+
+          <button type="submit" class="submit-btn">S’inscrire</button>
+        </form>
+
+        <p id="error-message" class="message error" aria-live="polite"></p>
+      </section>
+
+      <section
+        id="summary-section"
+        class="card summary-card hidden"
+        aria-live="polite"
+      >
+        <h2>Récapitulatif de votre inscription</h2>
+
+        <div class="summary-list">
+          <div class="summary-item">
+            <span>Login</span><strong id="summary-login"></strong>
+          </div>
+          <div class="summary-item">
+            <span>Nom</span><strong id="summary-name"></strong>
+          </div>
+          <div class="summary-item">
+            <span>Prénom</span><strong id="summary-firstName"></strong>
+          </div>
+          <div class="summary-item">
+            <span>Adresse</span><strong id="summary-address"></strong>
+          </div>
+          <div class="summary-item">
+            <span>Email</span><strong id="summary-email"></strong>
+          </div>
+          <div class="summary-item">
+            <span>Téléphone</span><strong id="summary-phone"></strong>
+          </div>
+          <div class="summary-item">
+            <span>Date de naissance</span
+            ><strong id="summary-birthDate"></strong>
+          </div>
+        </div>
+
+        <button type="button" id="back-button" class="secondary-btn">
+          Modifier les informations
+        </button>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
