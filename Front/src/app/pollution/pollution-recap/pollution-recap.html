@@ -1,0 +1,64 @@
+<article class="card recap">
+  <header>
+    <p class="badge">Déclaration enregistrée</p>
+    <h1>{{ pollution.title }}</h1>
+    <p class="type">{{ pollution.type }}</p>
+  </header>
+
+  <div class="body">
+    @if (pollution.photoUrl) {
+      <figure class="photo">
+        @if (!photoBroken()) {
+          <img
+            [src]="pollution.photoUrl"
+            [alt]="'Photo : ' + pollution.title"
+            loading="lazy"
+            (error)="photoBroken.set(true)"
+          />
+        } @else {
+          <p class="photo-error">Impossible de charger l'image.</p>
+        }
+        <figcaption>
+          <a [href]="pollution.photoUrl" target="_blank" rel="noopener noreferrer">{{
+            pollution.photoUrl
+          }}</a>
+        </figcaption>
+      </figure>
+    }
+
+    <dl>
+      <div class="full">
+        <dt>Description</dt>
+        <dd class="description">{{ pollution.description }}</dd>
+      </div>
+      <div>
+        <dt>Date de l'observation</dt>
+        <dd>{{ observedAtFr }}</dd>
+      </div>
+      <div>
+        <dt>Lieu</dt>
+        <dd>{{ pollution.location }}</dd>
+      </div>
+      <div>
+        <dt>Latitude</dt>
+        <dd>{{ pollution.latitude | number: '1.0-6' }}</dd>
+      </div>
+      <div>
+        <dt>Longitude</dt>
+        <dd>{{ pollution.longitude | number: '1.0-6' }}</dd>
+      </div>
+      <div class="full">
+        <dt>Position</dt>
+        <dd>
+          <a [href]="mapUrl" target="_blank" rel="noopener noreferrer">Voir sur OpenStreetMap</a>
+        </dd>
+      </div>
+    </dl>
+  </div>
+
+  <footer>
+    <button class="btn btn-outline" type="button" (click)="restart.emit()">
+      Nouvelle déclaration
+    </button>
+  </footer>
+</article>
