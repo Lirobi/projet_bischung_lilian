@@ -1,22 +1,43 @@
-.recap {
+.split {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
   padding: 0;
   overflow: hidden;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lift);
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem 1.25rem 1.75rem;
+  min-width: 0;
+}
+
+/* En-tête de succès (même animation que l'exercice 01) */
 header {
-  padding: 1.5rem 1.25rem 1.25rem;
-  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  text-align: center;
 }
 
-.badge {
-  display: inline-block;
-  margin: 0 0 0.75rem;
-  padding: 0.2rem 0.65rem;
-  border-radius: var(--radius-full);
-  background: var(--good-50);
-  color: var(--good-text);
+header svg {
+  width: 6.5rem;
+  overflow: visible;
+  margin-bottom: 0.25rem;
+}
+
+.kicker {
+  margin: 0;
   font-size: 0.75rem;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--good-text);
 }
 
 h1 {
@@ -25,66 +46,37 @@ h1 {
   overflow-wrap: anywhere;
 }
 
-.type {
-  margin: 0.25rem 0 0;
-  color: var(--foreground-muted);
-  font-size: 0.875rem;
-}
-
-.body {
-  display: grid;
-  gap: 1.25rem;
-  padding: 1.25rem;
-}
-
-.photo {
-  margin: 0;
-}
-
-.photo img {
-  display: block;
-  width: 100%;
-  max-height: 22rem;
-  object-fit: cover;
-  border-radius: var(--radius-md);
-  background: var(--surface-muted);
-}
-
-.photo-error {
-  margin: 0;
-  padding: 2rem 1rem;
-  border-radius: var(--radius-md);
-  background: var(--error-50);
-  color: var(--error-text);
-  font-size: 0.875rem;
-  text-align: center;
-}
-
-figcaption {
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.tag {
+  margin-top: 0.25rem;
+  padding: 0.15rem 0.7rem;
+  border-radius: var(--radius-full);
+  background: var(--accent-50);
+  color: var(--accent-600);
+  font-size: 0.8125rem;
+  font-weight: 500;
 }
 
 dl {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem 1.5rem;
+  gap: 0.875rem 1.25rem;
   margin: 0;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  background: var(--surface-muted);
 }
 
 dt {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   color: var(--foreground-subtle);
 }
 
 dd {
-  margin: 0.2rem 0 0;
+  margin: 0.15rem 0 0;
+  font-size: 0.9375rem;
   overflow-wrap: anywhere;
 }
 
@@ -93,31 +85,49 @@ dd {
   line-height: 1.55;
 }
 
+.url a {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8125rem;
+}
+
+.photo-error {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--error-text);
+}
+
 a {
   color: var(--accent-500);
 }
 
-footer {
-  padding: 0 1.25rem 1.5rem;
+/* Photo : bandeau sur mobile, colonne à droite dès 768px (comme le panneau illustré) */
+.photo {
+  order: -1;
+  position: relative;
+  height: 14rem;
+  margin: 0;
+  background: linear-gradient(160deg, var(--accent-500), var(--accent-700));
 }
 
-footer .btn {
+.photo img {
+  position: absolute;
+  inset: 0;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-@media (min-width: 640px) {
-  header,
-  .body {
-    padding-left: 2.25rem;
-    padding-right: 2.25rem;
+@media (min-width: 768px) {
+  .split {
+    grid-template-columns: 1.15fr 1fr;
   }
 
-  footer {
-    padding: 0 2.25rem 2rem;
-  }
-
-  footer .btn {
-    width: auto;
+  .content {
+    padding: 1.75rem 2.25rem 2rem;
   }
 
   dl {
@@ -126,5 +136,130 @@ footer .btn {
 
   .full {
     grid-column: 1 / -1;
+  }
+
+  .photo {
+    order: 0;
+    height: auto;
+    min-height: 100%;
+  }
+}
+
+.badge {
+  fill: var(--accent-500);
+  transform: scale(0);
+  animation: badge-pop 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+}
+.ring {
+  fill: none;
+  stroke: var(--accent-300);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transform: rotate(-90deg);
+  animation: draw-in 0.7s ease-out 0.25s forwards;
+}
+.tick {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-in 0.45s ease-out 0.65s forwards;
+}
+.pulse {
+  fill: none;
+  stroke: var(--accent-300);
+  stroke-width: 2;
+  opacity: 0;
+  animation: pulse-out 2.4s ease-out 1.1s infinite;
+}
+.p2 {
+  animation-delay: 2.3s;
+}
+.confetti {
+  opacity: 0;
+  animation: burst 1.3s cubic-bezier(0.16, 1, 0.3, 1) calc(0.6s + var(--d)) forwards;
+}
+.sparkle path {
+  stroke: var(--accent-300);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.sparkle {
+  opacity: 0;
+  animation: twinkle 2.2s ease-in-out 1s infinite;
+}
+.s2 {
+  animation-delay: 1.6s;
+}
+.s3 {
+  animation-delay: 2.2s;
+}
+
+@keyframes badge-pop {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes draw-in {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes burst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0) scale(0.4);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), calc(var(--y) + 24px)) rotate(var(--r)) scale(1);
+  }
+}
+@keyframes pulse-out {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  header * {
+    animation: none !important;
+  }
+  .badge {
+    transform: none;
+  }
+  .ring,
+  .tick {
+    stroke-dashoffset: 0;
   }
 }

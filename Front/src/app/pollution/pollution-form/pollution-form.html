@@ -1,186 +1,190 @@
-<form class="card" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-  <h1>Déclarer une pollution</h1>
-  <p class="lead">Tous les champs sont requis, sauf la photo.</p>
-
-  <div class="field">
-    <label for="title">Titre de la pollution</label>
-    <input
-      class="input"
-      id="title"
-      type="text"
-      formControlName="title"
-      placeholder="Ex. : Bidons abandonnés en bord de rivière"
-      maxlength="100"
-    />
-    <p class="msg" role="alert">
-      @if (showError('title')) {
-        @if (hasError('title', 'required') || hasError('title', 'pattern')) {
-          Titre requis.
-        } @else if (hasError('title', 'minlength')) {
-          3 caractères minimum.
-        } @else {
-          100 caractères maximum.
-        }
-      }
-    </p>
-  </div>
-
-  <div class="row">
-    <div class="field">
-      <label for="type">Type de pollution</label>
-      <select class="input" id="type" formControlName="type">
-        <option value="" disabled>Choisir un type…</option>
-        @for (type of types; track type) {
-          <option [value]="type">{{ type }}</option>
-        }
-      </select>
-      <p class="msg" role="alert">
-        @if (showError('type')) {
-          Type requis.
-        }
-      </p>
-    </div>
+<div class="card split">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <h1>Déclarer une pollution</h1>
+    <p class="lead">Tous les champs sont requis, sauf la photo.</p>
 
     <div class="field">
-      <label for="observedAt">Date de l'observation</label>
+      <label for="title">Titre de la pollution</label>
       <input
         class="input"
-        id="observedAt"
-        type="date"
-        formControlName="observedAt"
-        min="1900-01-01"
-        [max]="today"
+        id="title"
+        type="text"
+        formControlName="title"
+        placeholder="Ex. : Bidons abandonnés en bord de rivière"
+        maxlength="100"
       />
       <p class="msg" role="alert">
-        @if (showError('observedAt')) {
-          @if (hasError('observedAt', 'required')) {
-            Date requise.
-          } @else if (hasError('observedAt', 'future')) {
-            La date ne peut pas être dans le futur.
+        @if (showError('title')) {
+          @if (hasError('title', 'required') || hasError('title', 'pattern')) {
+            Titre requis.
+          } @else if (hasError('title', 'minlength')) {
+            3 caractères minimum.
           } @else {
-            Date invalide.
+            100 caractères maximum.
           }
         }
       </p>
     </div>
-  </div>
 
-  <div class="field">
-    <label for="description">Description</label>
-    <textarea
-      class="input"
-      id="description"
-      rows="4"
-      formControlName="description"
-      placeholder="Ce que vous avez observé, l'étendue, l'odeur, etc."
-      maxlength="1000"
-    ></textarea>
-    <p class="msg" role="alert">
-      @if (showError('description')) {
-        @if (hasError('description', 'required') || hasError('description', 'pattern')) {
-          Description requise.
-        } @else if (hasError('description', 'minlength')) {
-          10 caractères minimum.
-        } @else {
-          1000 caractères maximum.
-        }
-      }
-    </p>
-  </div>
+    <div class="row">
+      <div class="field">
+        <label for="type">Type de pollution</label>
+        <select class="input" id="type" formControlName="type">
+          <option value="" disabled>Choisir un type…</option>
+          @for (type of types; track type) {
+            <option [value]="type">{{ type }}</option>
+          }
+        </select>
+        <p class="msg" role="alert">
+          @if (showError('type')) {
+            Type requis.
+          }
+        </p>
+      </div>
 
-  <div class="field">
-    <label for="location">Lieu</label>
-    <input
-      class="input"
-      id="location"
-      type="text"
-      formControlName="location"
-      placeholder="Ex. : Quai des Bateliers, Strasbourg"
-      maxlength="150"
-    />
-    <p class="msg" role="alert">
-      @if (showError('location')) {
-        @if (hasError('location', 'maxlength')) {
-          150 caractères maximum.
-        } @else {
-          Lieu requis.
-        }
-      }
-    </p>
-  </div>
+      <div class="field">
+        <label for="observedAt">Date de l'observation</label>
+        <input
+          class="input"
+          id="observedAt"
+          type="date"
+          formControlName="observedAt"
+          min="1900-01-01"
+          [max]="today"
+        />
+        <p class="msg" role="alert">
+          @if (showError('observedAt')) {
+            @if (hasError('observedAt', 'required')) {
+              Date requise.
+            } @else if (hasError('observedAt', 'future')) {
+              La date ne peut pas être dans le futur.
+            } @else {
+              Date invalide.
+            }
+          }
+        </p>
+      </div>
+    </div>
 
-  <div class="row">
     <div class="field">
-      <label for="latitude">Latitude</label>
-      <input
+      <label for="description">Description</label>
+      <textarea
         class="input"
-        id="latitude"
-        type="number"
-        inputmode="decimal"
-        step="any"
-        min="-90"
-        max="90"
-        formControlName="latitude"
-        placeholder="Ex. : 48.5734"
-      />
+        id="description"
+        rows="4"
+        formControlName="description"
+        placeholder="Ce que vous avez observé, l'étendue, l'odeur, etc."
+        maxlength="1000"
+      ></textarea>
       <p class="msg" role="alert">
-        @if (showError('latitude')) {
-          @if (hasError('latitude', 'required')) {
-            Latitude requise.
-          } @else if (hasError('latitude', 'number')) {
-            Nombre invalide.
+        @if (showError('description')) {
+          @if (hasError('description', 'required') || hasError('description', 'pattern')) {
+            Description requise.
+          } @else if (hasError('description', 'minlength')) {
+            10 caractères minimum.
           } @else {
-            Entre -90 et 90.
+            1000 caractères maximum.
           }
         }
       </p>
     </div>
 
     <div class="field">
-      <label for="longitude">Longitude</label>
+      <label for="location">Lieu</label>
       <input
         class="input"
-        id="longitude"
-        type="number"
-        inputmode="decimal"
-        step="any"
-        min="-180"
-        max="180"
-        formControlName="longitude"
-        placeholder="Ex. : 7.7521"
+        id="location"
+        type="text"
+        formControlName="location"
+        placeholder="Ex. : Quai des Bateliers, Strasbourg"
+        maxlength="150"
       />
       <p class="msg" role="alert">
-        @if (showError('longitude')) {
-          @if (hasError('longitude', 'required')) {
-            Longitude requise.
-          } @else if (hasError('longitude', 'number')) {
-            Nombre invalide.
+        @if (showError('location')) {
+          @if (hasError('location', 'maxlength')) {
+            150 caractères maximum.
           } @else {
-            Entre -180 et 180.
+            Lieu requis.
           }
         }
       </p>
     </div>
-  </div>
 
-  <div class="field">
-    <label for="photoUrl">Photo (URL) <span class="optional">— optionnel</span></label>
-    <input
-      class="input"
-      id="photoUrl"
-      type="url"
-      inputmode="url"
-      autocapitalize="none"
-      spellcheck="false"
-      formControlName="photoUrl"
-      placeholder="https://…"
-    />
-    <p class="msg" role="alert">
-      @if (showError('photoUrl')) {
-        L'URL doit commencer par http:// ou https://.
-      }
-    </p>
-  </div>
+    <div class="row">
+      <div class="field">
+        <label for="latitude">Latitude</label>
+        <input
+          class="input"
+          id="latitude"
+          type="number"
+          inputmode="decimal"
+          step="any"
+          min="-90"
+          max="90"
+          formControlName="latitude"
+          placeholder="Ex. : 48.5734"
+        />
+        <p class="msg" role="alert">
+          @if (showError('latitude')) {
+            @if (hasError('latitude', 'required')) {
+              Latitude requise.
+            } @else if (hasError('latitude', 'number')) {
+              Nombre invalide.
+            } @else {
+              Entre -90 et 90.
+            }
+          }
+        </p>
+      </div>
 
-  <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Déclarer</button>
-</form>
+      <div class="field">
+        <label for="longitude">Longitude</label>
+        <input
+          class="input"
+          id="longitude"
+          type="number"
+          inputmode="decimal"
+          step="any"
+          min="-180"
+          max="180"
+          formControlName="longitude"
+          placeholder="Ex. : 7.7521"
+        />
+        <p class="msg" role="alert">
+          @if (showError('longitude')) {
+            @if (hasError('longitude', 'required')) {
+              Longitude requise.
+            } @else if (hasError('longitude', 'number')) {
+              Nombre invalide.
+            } @else {
+              Entre -180 et 180.
+            }
+          }
+        </p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="photoUrl">Photo (URL) <span class="optional">— optionnel</span></label>
+      <input
+        class="input"
+        id="photoUrl"
+        type="url"
+        inputmode="url"
+        autocapitalize="none"
+        spellcheck="false"
+        formControlName="photoUrl"
+        placeholder="https://…"
+      />
+      <p class="msg" role="alert">
+        @if (showError('photoUrl')) {
+          L'URL doit commencer par http:// ou https://.
+        }
+      </p>
+    </div>
+
+    <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Déclarer</button>
+  </form>
+
+  <app-pollution-panel />
+</div>

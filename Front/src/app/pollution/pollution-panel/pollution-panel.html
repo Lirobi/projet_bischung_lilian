@@ -1,0 +1,67 @@
+<svg viewBox="0 0 400 460" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <circle class="halo" cx="340" cy="60" r="120" />
+  <circle class="halo" cx="40" cy="430" r="110" />
+
+  <g class="plus float f1"><path d="M60 70v28M46 84h28" /></g>
+  <g class="plus float f2"><path d="M212 100v20M202 110h20" /></g>
+  <g class="plus float f3"><path d="M372 270v18M363 279h18" /></g>
+  <circle class="dot-good float f2" cx="44" cy="160" r="15" />
+  <path class="drop float f3" d="M362 340c0 0-14 15-14 25a14 14 0 0 0 28 0c0-10-14-25-14-25Z" />
+
+  <!-- carte : rivière + repère de pollution -->
+  <g class="card-map float f1">
+    <rect x="80" y="150" width="250" height="180" rx="14" fill="#fff" />
+    <circle class="live" cx="100" cy="170" r="5" />
+    <rect x="114" y="165" width="80" height="10" rx="5" fill="#dbe6f8" />
+    <rect x="94" y="186" width="222" height="130" rx="8" fill="#eef3fc" />
+    <rect x="108" y="198" width="40" height="28" rx="4" fill="#dbe6f8" />
+    <rect x="158" y="198" width="30" height="40" rx="4" fill="#dbe6f8" />
+    <rect x="252" y="196" width="50" height="30" rx="4" fill="#dbe6f8" />
+    <rect x="112" y="244" width="28" height="22" rx="4" fill="#dbe6f8" />
+    <path class="river" d="M94 296 C140 266 170 306 210 276 S282 238 316 256" />
+    <path class="flow" pathLength="1" d="M94 296 C140 266 170 306 210 276 S282 238 316 256" />
+    <ellipse class="ping" cx="232" cy="266" rx="12" ry="4.5" />
+    <g class="pin">
+      <path
+        d="M232 216c-12 0-20 9-20 19 0 14 20 30 20 30s20-16 20-30c0-10-8-19-20-19Z"
+        fill="#d97164"
+      />
+      <circle cx="232" cy="235" r="7" fill="#fff" />
+    </g>
+  </g>
+
+  <!-- carte : alerte -->
+  <g class="card-alert float f2">
+    <rect x="236" y="62" width="134" height="74" rx="12" fill="#fff" />
+    <g class="warn">
+      <path
+        d="M262 80 L280 112 H244 Z"
+        fill="#d9a838"
+        stroke="#d9a838"
+        stroke-width="4"
+        stroke-linejoin="round"
+      />
+      <path d="M262 91v9" stroke="#fff" stroke-width="3" stroke-linecap="round" />
+      <circle cx="262" cy="106" r="1.8" fill="#fff" />
+    </g>
+    <rect x="292" y="84" width="62" height="9" rx="4.5" fill="#dbe6f8" />
+    <rect x="292" y="102" width="42" height="9" rx="4.5" fill="#dbe6f8" />
+  </g>
+
+  <!-- carte : checklist de la déclaration -->
+  <g class="card-list float f3">
+    <rect x="46" y="342" width="150" height="100" rx="12" fill="#fff" />
+    <g class="check" style="--d: 0.2s">
+      <circle cx="70" cy="368" r="9" fill="#4caf7d" />
+      <path d="M65 368l4 4 7-8" />
+    </g>
+    <g class="check" style="--d: 0.5s">
+      <circle cx="70" cy="396" r="9" fill="#4caf7d" />
+      <path d="M65 396l4 4 7-8" />
+    </g>
+    <circle cx="70" cy="424" r="9" fill="#dbe6f8" />
+    <rect x="90" y="363" width="82" height="9" rx="4.5" fill="#dbe6f8" />
+    <rect x="90" y="391" width="56" height="9" rx="4.5" fill="#dbe6f8" />
+    <rect x="90" y="419" width="70" height="9" rx="4.5" fill="#dbe6f8" />
+  </g>
+</svg>

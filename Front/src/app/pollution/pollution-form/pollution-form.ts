@@ -7,6 +7,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { PollutionPanel } from '../pollution-panel/pollution-panel';
 import { POLLUTION_TYPES, Pollution, PollutionType } from '../pollution.model';
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -54,7 +55,7 @@ const notBlank = Validators.pattern(/.*\S.*/s);
 
 @Component({
   selector: 'app-pollution-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, PollutionPanel],
   templateUrl: './pollution-form.html',
   styleUrl: './pollution-form.css',
 })

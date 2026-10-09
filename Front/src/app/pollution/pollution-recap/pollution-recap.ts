@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, Output, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import { PollutionPanel } from '../pollution-panel/pollution-panel';
 import { Pollution } from '../pollution.model';
 
 @Component({
   selector: 'app-pollution-recap',
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, PollutionPanel],
   templateUrl: './pollution-recap.html',
   styleUrl: './pollution-recap.css',
 })
