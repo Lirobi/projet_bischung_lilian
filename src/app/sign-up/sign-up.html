@@ -1,0 +1,429 @@
+<main class="anim-page-in">
+  <div class="card split">
+    <div class="left">
+      <form
+        #signUpForm="ngForm"
+        (ngSubmit)="onSubmit(signUpForm)"
+        [class.done]="submitted()"
+        [attr.inert]="submitted() ? '' : null"
+        novalidate
+      >
+        <h1>Inscription</h1>
+
+        <div class="field">
+          <label for="login">Login</label>
+          <input
+            class="input"
+            id="login"
+            name="login"
+            type="text"
+            autocomplete="nickname"
+            autocapitalize="none"
+            spellcheck="false"
+            [(ngModel)]="user.login"
+            #login="ngModel"
+            required
+            minlength="3"
+            maxlength="30"
+            pattern="[A-Za-z0-9._\-]+"
+          />
+          <p class="msg" role="alert">
+            @if (login.invalid && (login.dirty || login.touched)) {
+              @if (login.errors?.['required']) {
+                Login requis.
+              } @else if (login.errors?.['minlength']) {
+                3 caractères minimum.
+              } @else {
+                Lettres, chiffres, . _ - uniquement.
+              }
+            }
+          </p>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="lastName">Nom</label>
+            <input
+              class="input"
+              id="lastName"
+              name="lastName"
+              type="text"
+              autocomplete="family-name"
+              [(ngModel)]="user.lastName"
+              #lastName="ngModel"
+              required
+              minlength="2"
+              maxlength="50"
+              pattern="[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ' \-]*"
+            />
+            <p class="msg" role="alert">
+              @if (lastName.invalid && (lastName.dirty || lastName.touched)) {
+                @if (lastName.errors?.['required']) {
+                  Nom requis.
+                } @else if (lastName.errors?.['minlength']) {
+                  2 caractères minimum.
+                } @else {
+                  Commence par une lettre ; lettres, espaces, - et ' uniquement.
+                }
+              }
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="firstName">Prénom</label>
+            <input
+              class="input"
+              id="firstName"
+              name="firstName"
+              type="text"
+              autocomplete="given-name"
+              [(ngModel)]="user.firstName"
+              #firstName="ngModel"
+              required
+              minlength="2"
+              maxlength="50"
+              pattern="[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ' \-]*"
+            />
+            <p class="msg" role="alert">
+              @if (firstName.invalid && (firstName.dirty || firstName.touched)) {
+                @if (firstName.errors?.['required']) {
+                  Prénom requis.
+                } @else if (firstName.errors?.['minlength']) {
+                  2 caractères minimum.
+                } @else {
+                  Commence par une lettre ; lettres, espaces, - et ' uniquement.
+                }
+              }
+            </p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            class="input"
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            [(ngModel)]="user.email"
+            #email="ngModel"
+            required
+            email
+            maxlength="100"
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}"
+          />
+          <p class="msg" role="alert">
+            @if (email.invalid && (email.dirty || email.touched)) {
+              @if (email.errors?.['required']) {
+                Email requis.
+              } @else {
+                Email invalide (ex. nom@domaine.fr).
+              }
+            }
+          </p>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="password">Mot de passe</label>
+            <div class="password">
+              <input
+                class="input"
+                id="password"
+                name="password"
+                [type]="showPassword() ? 'text' : 'password'"
+                autocomplete="new-password"
+                [(ngModel)]="user.password"
+                #password="ngModel"
+                required
+                minlength="8"
+                maxlength="64"
+                pattern="(?=.*[A-Za-z])(?=.*\d).+"
+              />
+              <button
+                class="toggle"
+                type="button"
+                (click)="showPassword.set(!showPassword())"
+                [attr.aria-label]="
+                  showPassword() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'
+                "
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+                  <circle cx="12" cy="12" r="3" />
+                  @if (showPassword()) {
+                    <path d="M3 3l18 18" />
+                  }
+                </svg>
+              </button>
+            </div>
+            <p class="msg" role="alert">
+              @if (password.invalid && (password.dirty || password.touched)) {
+                @if (password.errors?.['required']) {
+                  Mot de passe requis.
+                } @else if (password.errors?.['minlength']) {
+                  8 caractères minimum.
+                } @else {
+                  1 lettre et 1 chiffre requis.
+                }
+              }
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="confirmPassword">Confirmation</label>
+            <div class="password">
+              <input
+                class="input"
+                id="confirmPassword"
+                name="confirmPassword"
+                [type]="showConfirm() ? 'text' : 'password'"
+                autocomplete="new-password"
+                [(ngModel)]="user.confirmPassword"
+                #confirmPassword="ngModel"
+                required
+              />
+              <button
+                class="toggle"
+                type="button"
+                (click)="showConfirm.set(!showConfirm())"
+                [attr.aria-label]="
+                  showConfirm() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'
+                "
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+                  <circle cx="12" cy="12" r="3" />
+                  @if (showConfirm()) {
+                    <path d="M3 3l18 18" />
+                  }
+                </svg>
+              </button>
+            </div>
+            <p class="msg" role="alert">
+              @if (
+                confirmPassword.errors?.['required'] &&
+                (confirmPassword.dirty || confirmPassword.touched)
+              ) {
+                Confirmation requise.
+              } @else if (confirmPassword.dirty && passwordsMismatch) {
+                Ne correspond pas.
+              }
+            </p>
+          </div>
+        </div>
+
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="signUpForm.invalid || passwordsMismatch"
+        >
+          S'inscrire
+        </button>
+      </form>
+
+      <div class="success" role="status" aria-live="polite" [attr.aria-hidden]="!submitted()">
+        <svg viewBox="-110 -110 220 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle class="pulse" r="52" />
+          <circle class="pulse p2" r="52" />
+          <g class="confetti" style="--x: 69px; --y: 14px; --r: 0deg; --d: 0s">
+            <rect x="-4" y="-2" width="8" height="4" rx="1.5" fill="#2f5fbf" />
+          </g>
+          <g class="confetti" style="--x: 67px; --y: 51px; --r: 47deg; --d: 0.05s">
+            <circle r="3.2" fill="#6cc24a" />
+          </g>
+          <g class="confetti" style="--x: 45px; --y: 87px; --r: 94deg; --d: 0.1s">
+            <rect x="-4" y="-2" width="8" height="4" rx="1.5" fill="#86a6e4" />
+          </g>
+          <g class="confetti" style="--x: 2px; --y: 70px; --r: 141deg; --d: 0.15s">
+            <circle r="3.2" fill="#d9a838" />
+          </g>
+          <g class="confetti" style="--x: -35px; --y: 77px; --r: 188deg; --d: 0.2s">
+            <rect x="-4" y="-2" width="8" height="4" rx="1.5" fill="#4caf7d" />
+          </g>
+          <g class="confetti" style="--x: -75px; --y: 63px; --r: 235deg; --d: 0.25s">
+            <circle r="3.2" fill="#b6cbf0" />
+          </g>
+          <g class="confetti" style="--x: -68px; --y: 17px; --r: 282deg; --d: 0.3s">
+            <rect x="-4" y="-2" width="8" height="4" rx="1.5" fill="#2f5fbf" />
+          </g>
+          <g class="confetti" style="--x: -82px; --y: -17px; --r: 329deg; --d: 0.35s">
+            <circle r="3.2" fill="#6cc24a" />
+          </g>
+          <g class="confetti" style="--x: -78px; --y: -59px; --r: 16deg; --d: 0.4s">
+            <rect x="-4" y="-2" width="8" height="4" rx="1.5" fill="#86a6e4" />
+          </g>
+          <g class="confetti" style="--x: -32px; --y: -62px; --r: 63deg; --d: 0.45s">
+            <circle r="3.2" fill="#d9a838" />
+          </g>
+          <g class="confetti" style="--x: -2px; --y: -84px; --r: 110deg; --d: 0.5s">
+            <rect x="-4" y="-2" width="8" height="4" rx="1.5" fill="#4caf7d" />
+          </g>
+          <g class="confetti" style="--x: 40px; --y: -89px; --r: 157deg; --d: 0.55s">
+            <circle r="3.2" fill="#b6cbf0" />
+          </g>
+          <g class="confetti" style="--x: 54px; --y: -45px; --r: 204deg; --d: 0.6s">
+            <rect x="-4" y="-2" width="8" height="4" rx="1.5" fill="#2f5fbf" />
+          </g>
+          <g class="confetti" style="--x: 81px; --y: -21px; --r: 251deg; --d: 0.65s">
+            <circle r="3.2" fill="#6cc24a" />
+          </g>
+          <circle class="badge" r="46" />
+          <circle class="ring" r="58" pathLength="1" />
+          <path class="tick" pathLength="1" d="M-20 2 L-6 16 L22 -14" />
+          <g class="sparkle s1"><path d="M-84 -60v14M-91 -53h14" /></g>
+          <g class="sparkle s2"><path d="M80 -70v12M74 -64h12" /></g>
+          <g class="sparkle s3"><path d="M72 66v14M65 73h14" /></g>
+        </svg>
+        <h2>Bienvenue, {{ user.firstName }} !</h2>
+        <p>
+          Ton compte <strong>{{ user.login }}</strong> a bien été créé.
+        </p>
+        <button class="btn btn-outline" type="button" (click)="restart(signUpForm)">
+          Créer un autre compte
+        </button>
+      </div>
+    </div>
+
+    <aside class="panel" aria-hidden="true">
+      <svg
+        viewBox="0 0 400 460"
+        preserveAspectRatio="xMidYMid slice"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle class="halo" cx="340" cy="60" r="120" />
+        <circle class="halo" cx="40" cy="430" r="110" />
+
+        <g class="plus float f1"><path d="M60 70v28M46 84h28" /></g>
+        <g class="plus float f2"><path d="M232 96v20M222 106h20" /></g>
+        <g class="plus float f3"><path d="M372 250v18M363 259h18" /></g>
+        <circle class="dot dot-good float f2" cx="44" cy="150" r="15" />
+        <circle class="dot dot-warn float f3" cx="362" cy="330" r="13" />
+
+        <!-- carte graphique -->
+        <g class="card-chart float f1">
+          <rect x="90" y="150" width="240" height="170" rx="14" fill="#fff" />
+          <circle class="live" cx="110" cy="172" r="5" />
+          <rect x="124" y="167" width="70" height="10" rx="5" fill="#dbe6f8" />
+          <rect
+            class="bar"
+            style="--d: 0.1s"
+            x="116"
+            y="262"
+            width="22"
+            height="30"
+            rx="4"
+            fill="#b6cbf0"
+          />
+          <rect
+            class="bar"
+            style="--d: 0.25s"
+            x="150"
+            y="248"
+            width="22"
+            height="44"
+            rx="4"
+            fill="#b6cbf0"
+          />
+          <rect
+            class="bar"
+            style="--d: 0.4s"
+            x="184"
+            y="256"
+            width="22"
+            height="36"
+            rx="4"
+            fill="#b6cbf0"
+          />
+          <rect
+            class="bar"
+            style="--d: 0.55s"
+            x="218"
+            y="226"
+            width="22"
+            height="66"
+            rx="4"
+            fill="#b6cbf0"
+          />
+          <rect
+            class="bar"
+            style="--d: 0.7s"
+            x="252"
+            y="238"
+            width="22"
+            height="54"
+            rx="4"
+            fill="#b6cbf0"
+          />
+          <rect
+            class="bar"
+            style="--d: 0.85s"
+            x="286"
+            y="206"
+            width="22"
+            height="86"
+            rx="4"
+            fill="#2f5fbf"
+          />
+          <path
+            class="trend"
+            pathLength="1"
+            d="M112 262 L145 238 L180 246 L222 214 L258 222 L300 190"
+          />
+        </g>
+
+        <!-- carte localisation -->
+        <g class="card-map float f2">
+          <rect x="236" y="76" width="130" height="86" rx="12" fill="#fff" />
+          <circle cx="258" cy="136" r="7" fill="none" stroke="#2f5fbf" stroke-width="3" />
+          <path class="route" pathLength="1" d="M266 132 C284 112 300 130 318 112" />
+          <g class="pin">
+            <path
+              d="M330 90c-12 0-20 9-20 19 0 14 20 30 20 30s20-16 20-30c0-10-8-19-20-19Z"
+              fill="#86a6e4"
+            />
+            <circle cx="330" cy="109" r="7" fill="#fff" />
+          </g>
+        </g>
+
+        <!-- carte checklist -->
+        <g class="card-list float f3">
+          <rect x="46" y="300" width="150" height="100" rx="12" fill="#fff" />
+          <g class="check" style="--d: 0.2s">
+            <circle cx="70" cy="326" r="9" fill="#4caf7d" />
+            <path d="M65 326l4 4 7-8" />
+          </g>
+          <g class="check" style="--d: 0.5s">
+            <circle cx="70" cy="354" r="9" fill="#4caf7d" />
+            <path d="M65 354l4 4 7-8" />
+          </g>
+          <circle cx="70" cy="382" r="9" fill="#dbe6f8" />
+          <rect x="90" y="321" width="82" height="9" rx="4.5" fill="#dbe6f8" />
+          <rect x="90" y="349" width="56" height="9" rx="4.5" fill="#dbe6f8" />
+          <rect x="90" y="377" width="70" height="9" rx="4.5" fill="#dbe6f8" />
+        </g>
+      </svg>
+    </aside>
+  </div>
+</main>
