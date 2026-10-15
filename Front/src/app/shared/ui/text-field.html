@@ -1,0 +1,38 @@
+<label [for]="id">{{ label() }}</label>
+<div class="control">
+  <input
+    class="input"
+    [class.invalid]="error()"
+    [class.has-toggle]="type() === 'password'"
+    [id]="id"
+    [type]="inputType()"
+    [value]="value()"
+    [disabled]="isDisabled()"
+    [attr.autocomplete]="autocomplete()"
+    [attr.maxlength]="maxlength()"
+    [attr.aria-invalid]="error() ? 'true' : null"
+    [attr.aria-describedby]="error() ? id + '-error' : null"
+    autocapitalize="none"
+    spellcheck="false"
+    (input)="onInput($event)"
+    (blur)="onBlur()"
+  />
+  @if (type() === 'password') {
+    <button
+      class="toggle"
+      type="button"
+      tabindex="-1"
+      [attr.aria-label]="revealed() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+      (click)="toggleReveal()"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+        <circle cx="12" cy="12" r="3" />
+        @if (revealed()) {
+          <path d="M4 4l16 16" />
+        }
+      </svg>
+    </button>
+  }
+</div>
+<p class="msg" role="alert" [id]="id + '-error'">{{ error() }}</p>

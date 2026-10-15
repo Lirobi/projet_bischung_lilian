@@ -1,0 +1,38 @@
+:host {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+}
+:host(.good) {
+  border-color: var(--good-200);
+  background: var(--good-50);
+  color: var(--good-text);
+}
+:host(.error) {
+  border-color: var(--error-200);
+  background: var(--error-50);
+  color: var(--error-text);
+}
+
+.icon {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.body {
+  min-width: 0;
+}
+.title {
+  margin: 0;
+  font-weight: 500;
+}

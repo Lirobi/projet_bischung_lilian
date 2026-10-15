@@ -1,0 +1,10 @@
+{
+  "name": "api",
+  "private": true,
+  "scripts": {
+    "start": "node -e \"require('fs').copyFileSync('db.seed.json','db.json')\" && json-server --watch db.json --port 3000 --middlewares ./middleware.js"
+  },
+  "devDependencies": {
+    "json-server": "0.17.4"
+  }
+}
