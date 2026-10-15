@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { PollutionPanel } from '../pollution-panel/pollution-panel';
-import { Pollution } from '../pollution.model';
+import { POLLUTION_TYPE_LABELS, Pollution } from '../../models/pollution.model';
 
 @Component({
   selector: 'app-pollution-recap',
@@ -12,6 +12,10 @@ import { Pollution } from '../pollution.model';
 export class PollutionRecap implements OnChanges {
   @Input({ required: true }) pollution!: Pollution;
   @Output() readonly restart = new EventEmitter<void>();
+
+  protected get typeLabel(): string {
+    return POLLUTION_TYPE_LABELS[this.pollution.type];
+  }
 
   /** Passe à true si l'URL fournie ne pointe pas vers une image chargeable. */
   protected readonly photoBroken = signal(false);

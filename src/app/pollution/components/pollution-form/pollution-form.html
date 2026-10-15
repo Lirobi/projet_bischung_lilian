@@ -19,7 +19,7 @@
             Titre requis.
           } @else if (hasError('title', 'minlength')) {
             3 caractères minimum.
-          } @else {
+          } @else if (hasError('title', 'maxlength')) {
             100 caractères maximum.
           }
         }
@@ -32,7 +32,7 @@
         <select class="input" id="type" formControlName="type">
           <option value="" disabled>Choisir un type…</option>
           @for (type of types; track type) {
-            <option [value]="type">{{ type }}</option>
+            <option [value]="type">{{ typeLabels[type] }}</option>
           }
         </select>
         <p class="msg" role="alert">
@@ -58,7 +58,7 @@
               Date requise.
             } @else if (hasError('observedAt', 'future')) {
               La date ne peut pas être dans le futur.
-            } @else {
+            } @else if (hasError('observedAt', 'date')) {
               Date invalide.
             }
           }
@@ -82,7 +82,7 @@
             Description requise.
           } @else if (hasError('description', 'minlength')) {
             10 caractères minimum.
-          } @else {
+          } @else if (hasError('description', 'maxlength')) {
             1000 caractères maximum.
           }
         }
@@ -103,7 +103,7 @@
         @if (showError('location')) {
           @if (hasError('location', 'maxlength')) {
             150 caractères maximum.
-          } @else {
+          } @else if (hasError('location', 'required') || hasError('location', 'pattern')) {
             Lieu requis.
           }
         }
@@ -130,7 +130,7 @@
               Latitude requise.
             } @else if (hasError('latitude', 'number')) {
               Nombre invalide.
-            } @else {
+            } @else if (hasError('latitude', 'min') || hasError('latitude', 'max')) {
               Entre -90 et 90.
             }
           }
@@ -156,7 +156,7 @@
               Longitude requise.
             } @else if (hasError('longitude', 'number')) {
               Nombre invalide.
-            } @else {
+            } @else if (hasError('longitude', 'min') || hasError('longitude', 'max')) {
               Entre -180 et 180.
             }
           }

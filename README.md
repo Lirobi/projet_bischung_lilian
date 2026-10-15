@@ -1,10 +1,72 @@
-# DESIGN.md — Système de design (repris de « utilitaires »)
+# CnamSiWeb
 
-Toute l'interface (`Front/`) doit suivre ce style : sobre, clair, marine + bleu roi, cartes blanches
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.24.
+
+## Development server
+
+To start a local development server, run:
+
+```bash
+ng serve
+```
+
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+## Code scaffolding
+
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+
+```bash
+ng generate component component-name
+```
+
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+
+```bash
+ng generate --help
+```
+
+## Building
+
+To build the project run:
+
+```bash
+ng build
+```
+
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+
+## Running unit tests
+
+To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+---
+
+## Système de design (repris de « utilitaires »)
+
+Toute l'interface (`src/`) doit suivre ce style : sobre, clair, marine + bleu roi, cartes blanches
 sur fond gris bleuté. Le Front est en HTML/CSS/JS pur : on utilise donc des **variables CSS**
 (pas de Tailwind). Ne jamais coder une couleur, un rayon ou une ombre en dur : passer par les tokens.
 
-## Principes
+### Principes
 
 - Fond gris bleuté très clair, **cartes blanches** avec bordure fine et ombre douce.
 - Texte **marine**, jamais noir pur. Titres de page en bleu roi.
@@ -13,7 +75,7 @@ sur fond gris bleuté. Le Front est en HTML/CSS/JS pur : on utilise donc des **v
 - Animations courtes et discrètes (apparition fondue 0,35 s) ; respecter `prefers-reduced-motion`.
 - Mobile d'abord : champs de formulaire en **16 px** (évite le zoom auto d'iOS), cibles tactiles ≥ 40 px.
 
-## Typographie
+### Typographie
 
 - Police : **Poppins** (graisses 300, 400, 500, 600, 700), repli `system-ui, -apple-system, sans-serif`.
   ```html
@@ -25,7 +87,7 @@ sur fond gris bleuté. Le Front est en HTML/CSS/JS pur : on utilise donc des **v
   Annotations : 0,75 rem, `--foreground-subtle`.
 - Chiffres clés (stats) : 1,5 rem / 600, `letter-spacing: -0.02em`.
 
-## Tokens (à coller dans `Front/style.css`)
+### Tokens (à coller dans `src/styles.css`)
 
 ```css
 :root {
@@ -89,9 +151,9 @@ button, a, [role="button"] { touch-action: manipulation; }
 @media (prefers-reduced-motion: reduce) { .anim-page-in { animation: none; } }
 ```
 
-## Composants
+### Composants
 
-### Carte
+#### Carte
 ```css
 .card {
   background: var(--surface);
@@ -103,7 +165,7 @@ button, a, [role="button"] { touch-action: manipulation; }
 ```
 Titre `1rem/600`, description `0.875rem` en `--foreground-muted`.
 
-### Boutons
+#### Boutons
 Base : `height: 2.5rem; padding: 0 1rem; border-radius: var(--radius-md); font-size: .875rem; font-weight: 500;
 display: inline-flex; align-items: center; justify-content: center; gap: .5rem; transition: background-color .15s;`
 Désactivé : `opacity: .5; pointer-events: none`. Focus : anneau 2 px `--accent-300` avec décalage 2 px.
@@ -118,7 +180,7 @@ Désactivé : `opacity: .5; pointer-events: none`. Focus : anneau 2 px `--accent
 
 Tailles : sm `2rem` (.75rem), md `2.5rem`, lg `3rem` (1rem), icône `2.5rem` carré.
 
-### Champs de formulaire (input / select / textarea)
+#### Champs de formulaire (input / select / textarea)
 ```css
 .input {
   height: 2.5rem; width: 100%;
@@ -137,39 +199,39 @@ textarea.input { min-height: 6rem; padding: .5rem .75rem; height: auto; }
 ```
 Label : `0.875rem / 500`, au-dessus du champ, `gap: .375rem`.
 
-### Alertes / messages (succès, avertissement, erreur)
+#### Alertes / messages (succès, avertissement, erreur)
 Fond `--*-50`, bordure `--*-200`, texte `--*-text`, rayon `--radius-md`, padding `.75rem 1rem`, titre en 500,
 corps `0.85rem` à 90 % d'opacité. Remplace les anciens `--danger` / `--success` du projet.
 
-### Badges
+#### Badges
 Pastille `--radius-full`, `0.75rem`, fond `--*-50`, texte `--*-text`, bordure `--*-200` (neutre : `--surface-muted` / `--foreground-muted`).
 
-### Stat (chiffre clé)
+#### Stat (chiffre clé)
 Une carte : libellé `0.875rem` muted, valeur `1.5rem / 600`, indice `0.75rem` subtle. Couleur de valeur selon le ton
 (`--foreground`, `--good-text`, `--warning-text`, `--error-text`).
 
-### Tableaux
+#### Tableaux
 Dans une carte ; en-tête `--surface-muted`, `0.75rem`, `--foreground-muted`, majuscules facultatives ;
 lignes séparées par `1px solid var(--border)` ; survol de ligne `--accent-50`.
 
-### Modale
+#### Modale
 Fond voilé `rgba(28, 37, 64, .4)`, panneau `--surface`, rayon `--radius-xl`, ombre `--shadow-lift`,
 entrée en « pop » (`scale(.94)` → 1, 0,5 s `cubic-bezier(.22, 1, .36, 1)`).
 
-### Chargement
+#### Chargement
 Squelette : dégradé `100deg, var(--surface-muted) 30%, #fff 50%, var(--surface-muted) 70%`,
 `background-size: 200% 100%`, animation shimmer 1,4 s.
 
-## Mise en page
+### Mise en page
 
 - Conteneur centré, largeur max ~ 960–1100 px, marges 1 rem (mobile) → 2 rem (desktop).
 - Espacement sur une échelle de 0,25 rem ; entre cartes `1rem`, dans une carte `1.25rem`.
 - Barres de défilement fines et discrètes (`scrollbar-width: thin`, visibles au survol seulement).
 - Icônes : style trait (Lucide), 16–20 px, couleur `--foreground-subtle` ou `--foreground-muted`.
 
-## Règles pour Claude
+### Règles pour Claude
 
-1. Lire ce fichier avant toute modification de `Front/`.
+1. Lire ce fichier avant toute modification de `src/`.
 2. Remplacer progressivement les anciennes variables (`--bg`, `--card`, `--primary`, `--text`, `--muted`,
    `--danger`, `--success`) et la police Arial par les tokens ci-dessus ; ne pas mélanger les deux systèmes.
 3. Pas de dégradé de fond ni de couleur vive hors palette ; l'accent reste le bleu roi.

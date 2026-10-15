@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Pollution } from '../pollution.model';
+import { Pollution } from '../../models/pollution.model';
 import { PollutionRecap } from './pollution-recap';
 
 describe('PollutionRecap', () => {
@@ -8,7 +8,7 @@ describe('PollutionRecap', () => {
 
   const pollution: Pollution = {
     title: 'Bidons abandonnés',
-    type: 'Chimique',
+    type: 'chemical',
     description: 'Une dizaine de bidons au bord de la rivière.',
     observedAt: '2026-10-01',
     location: 'Quai des Bateliers, Strasbourg',

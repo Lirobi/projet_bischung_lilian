@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl } from '@angular/forms';
-import { Pollution } from '../pollution.model';
+import { Pollution } from '../../models/pollution.model';
 import { PollutionForm, finiteNumber, observationDate, todayIso } from './pollution-form';
 
 describe('PollutionForm', () => {
@@ -21,7 +21,7 @@ describe('PollutionForm', () => {
 
   const fillValid = async () => {
     await set('title', 'Bidons abandonnés');
-    await set('type', 'Chimique');
+    await set('type', 'chemical');
     await set('description', '  Une dizaine de bidons au bord de la rivière.  ');
     await set('observedAt', '2026-10-01');
     await set('location', 'Quai des Bateliers, Strasbourg');
@@ -52,6 +52,14 @@ describe('PollutionForm', () => {
   it('offers the 6 pollution types', () => {
     const options = [...el.querySelectorAll<HTMLOptionElement>('#type option:not([disabled])')];
     expect(options.map((o) => o.value)).toEqual([
+      'plastic',
+      'chemical',
+      'illegal-dump',
+      'water',
+      'air',
+      'other',
+    ]);
+    expect(options.map((o) => o.textContent!.trim())).toEqual([
       'Plastique',
       'Chimique',
       'Dépôt sauvage',
@@ -77,7 +85,7 @@ describe('PollutionForm', () => {
     submitBtn().click();
     expect(emitted).toEqual({
       title: 'Bidons abandonnés',
-      type: 'Chimique',
+      type: 'chemical',
       description: 'Une dizaine de bidons au bord de la rivière.',
       observedAt: '2026-10-01',
       location: 'Quai des Bateliers, Strasbourg',

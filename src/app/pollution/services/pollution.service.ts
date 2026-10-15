@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Pollution } from './pollution.model';
+import { Pollution } from '../models/pollution.model';
 
 /**
  * Point d'entrée unique vers le backend.

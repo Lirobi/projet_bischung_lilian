@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { PollutionPanel } from '../pollution-panel/pollution-panel';
-import { POLLUTION_TYPES, Pollution, PollutionType } from '../pollution.model';
+import { POLLUTION_TYPES, POLLUTION_TYPE_LABELS, Pollution, PollutionType } from '../../models/pollution.model';
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const MIN_YEAR = 1900;
@@ -65,6 +65,7 @@ export class PollutionForm {
   private readonly fb = inject(NonNullableFormBuilder);
 
   protected readonly types = POLLUTION_TYPES;
+  protected readonly typeLabels = POLLUTION_TYPE_LABELS;
   protected readonly today = todayIso();
 
   protected readonly form = this.fb.group({

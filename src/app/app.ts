@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
-import { PollutionForm } from './pollution/pollution-form/pollution-form';
-import { PollutionRecap } from './pollution/pollution-recap/pollution-recap';
-import { Pollution } from './pollution/pollution.model';
-import { PollutionService } from './pollution/pollution.service';
+import { PollutionForm } from './pollution/components/pollution-form/pollution-form';
+import { PollutionRecap } from './pollution/components/pollution-recap/pollution-recap';
+import { Pollution } from './pollution/models/pollution.model';
+import { PollutionService } from './pollution/services/pollution.service';
 
 @Component({
   selector: 'app-root',
