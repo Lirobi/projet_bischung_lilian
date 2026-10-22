@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-/** Bouton du design system : `primary` (plein) ou `outline` (contour). */
+/** Bouton du design system : `primary` (plein), `outline` (contour) ou `danger` (suppression). */
 @Component({
   selector: 'app-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -8,6 +8,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
     <button
       class="btn"
       [class.outline]="variant() === 'outline'"
+      [class.danger]="variant() === 'danger'"
       [type]="type()"
       [disabled]="disabled() || loading()"
     >
@@ -21,7 +22,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   host: { '[class.block]': 'block()' },
 })
 export class Button {
-  readonly variant = input<'primary' | 'outline'>('primary');
+  readonly variant = input<'primary' | 'outline' | 'danger'>('primary');
   readonly type = input<'button' | 'submit'>('button');
   readonly disabled = input(false);
   readonly loading = input(false);

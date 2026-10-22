@@ -47,6 +47,13 @@
   background: var(--surface-muted);
 }
 
+.btn.danger {
+  background: var(--error-600);
+}
+.btn.danger:hover {
+  background: var(--error-text);
+}
+
 .spinner {
   width: 0.9rem;
   height: 0.9rem;

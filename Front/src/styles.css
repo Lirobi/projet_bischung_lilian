@@ -10,7 +10,7 @@
   --foreground-muted: #5b6785;
   --foreground-subtle: #98a1b8;
 
-  /* Accent — bleu roi */
+  /* Accent - bleu roi */
   --accent-50: #eef3fc;
   --accent-100: #dbe6f8;
   --accent-200: #b6cbf0;
@@ -21,7 +21,7 @@
   --accent-700: #1d4086;
   --accent-contrast: #ffffff;
 
-  /* Statuts — pastel */
+  /* Statuts - pastel */
   --good-50: #e7f5ec;   --good-200: #b9e4c6;   --good-500: #4caf7d;   --good-600: #3c9268;   --good-text: #2b6b4c;
   --warning-50: #fbf3df; --warning-200: #f0dda0; --warning-500: #d9a838; --warning-600: #b98c26; --warning-text: #8a6a1c;
   --error-50: #fbeae8;  --error-200: #f0c2bc;  --error-500: #d97164;  --error-600: #bd5646;  --error-text: #93372b;
@@ -55,3 +55,67 @@ button, a, [role="button"] { touch-action: manipulation; }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 .anim-page-in { animation: fade-in 0.35s ease-out both; }
 @media (prefers-reduced-motion: reduce) { .anim-page-in { animation: none; } }
+
+h1 { color: var(--accent-500); letter-spacing: -0.01em; font-weight: 600; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: 1.25rem;
+}
+
+.input {
+  height: 2.5rem; width: 100%;
+  padding: 0 .75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--foreground);
+  font: inherit; font-size: 1rem;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.input::placeholder { color: var(--foreground-subtle); }
+.input:focus { border-color: var(--accent-400); box-shadow: 0 0 0 2px var(--accent-100); }
+@media (min-width: 768px) { .input { font-size: 0.875rem; } }
+
+.tag {
+  padding: .15rem .7rem;
+  border-radius: var(--radius-full);
+  background: var(--accent-50);
+  color: var(--accent-600);
+  font-size: .8125rem; font-weight: 500;
+}
+
+/* Pastille : bouton de filtre (aria-pressed) ou bouton radio du formulaire */
+.chip { cursor: pointer; }
+.chip span {
+  display: inline-block;
+  padding: .35rem .85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  color: var(--foreground-muted);
+  font-size: .8125rem; font-weight: 500;
+  transition: background-color .15s, color .15s, border-color .15s;
+}
+.chip:hover span { border-color: var(--accent-300); }
+.chip[aria-pressed="true"] span,
+.chip input:checked + span { background: var(--accent-500); border-color: var(--accent-500); color: var(--accent-contrast); }
+.chip:focus-visible span,
+.chip input:focus-visible + span { outline: 2px solid var(--accent-300); outline-offset: 2px; }
+
+/* Lien affiché comme un bouton */
+.link-btn {
+  height: 2.5rem; padding: 0 1rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); border-radius: var(--radius-md);
+  background: var(--surface); color: var(--foreground);
+  font-size: .875rem; font-weight: 500; text-decoration: none;
+  transition: background-color .15s;
+}
+.link-btn:hover { background: var(--surface-muted); }
+.link-btn.primary { background: var(--accent-500); border-color: transparent; color: var(--accent-contrast); box-shadow: var(--shadow-soft); }
+.link-btn.primary:hover { background: var(--accent-600); }

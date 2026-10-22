@@ -1,0 +1,82 @@
+<header class="head">
+  <h1>Pollutions</h1>
+  <a class="link-btn primary" routerLink="/pollutions/nouvelle">Déclarer une pollution</a>
+</header>
+
+<section class="card filters" aria-label="Filtres">
+  <div class="filter-row">
+    <div class="field search">
+      <label for="search">Recherche</label>
+      <input
+        class="input"
+        id="search"
+        type="search"
+        placeholder="Titre, lieu, description"
+        [value]="filter().search"
+        (input)="setSearch($event)"
+      />
+    </div>
+    <div class="field">
+      <label for="from">Du</label>
+      <input class="input" id="from" type="date" [value]="filter().from" (change)="setDate('from', $event)" />
+    </div>
+    <div class="field">
+      <label for="to">Au</label>
+      <input class="input" id="to" type="date" [value]="filter().to" (change)="setDate('to', $event)" />
+    </div>
+  </div>
+
+  <div class="chips" role="group" aria-label="Types">
+    @for (type of types; track type) {
+      <button
+        type="button"
+        class="chip"
+        [attr.aria-pressed]="filter().types.includes(type)"
+        (click)="toggleType(type)"
+      >
+        <span>{{ typeLabels[type] }}</span>
+      </button>
+    }
+    @if (filterActive()) {
+      <button type="button" class="reset" (click)="resetFilter()">Réinitialiser</button>
+    }
+  </div>
+</section>
+
+@if (error(); as message) {
+  <app-alert variant="error">
+    {{ message }}
+    <app-button variant="outline" (click)="load()">Réessayer</app-button>
+  </app-alert>
+}
+
+@if (loading()) {
+  <p class="empty">Chargement…</p>
+} @else if (!error()) {
+  <p class="count">{{ filtered().length }} / {{ pollutions().length }} pollution(s)</p>
+
+  @if (filtered().length === 0) {
+    <p class="empty">
+      {{ pollutions().length === 0 ? 'Aucune pollution déclarée.' : 'Aucune pollution ne correspond aux filtres.' }}
+    </p>
+  } @else {
+    <ul>
+      @for (p of filtered(); track p.id) {
+        <li class="card item">
+          <a class="item-link" [routerLink]="['/pollutions', p.id]">
+            <span class="tag">{{ typeLabels[p.type] }}</span>
+            <strong>{{ p.title }}</strong>
+            <span class="meta">{{ formatDate(p.observedAt) }} · {{ p.location }}</span>
+          </a>
+          <app-button
+            variant="danger"
+            [loading]="deletingId() === p.id"
+            (click)="remove(p)"
+          >
+            Supprimer
+          </app-button>
+        </li>
+      }
+    </ul>
+  }
+}
