@@ -1,0 +1,74 @@
+:host {
+  display: inline-block;
+}
+:host(.block),
+:host(.block) .btn {
+  display: flex;
+  width: 100%;
+}
+
+.btn {
+  height: 2.5rem;
+  padding: 0 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: var(--accent-500);
+  color: var(--accent-contrast);
+  box-shadow: var(--shadow-soft);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+.btn:hover {
+  background: var(--accent-600);
+}
+.btn:focus-visible {
+  outline: 2px solid var(--accent-300);
+  outline-offset: 2px;
+}
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.btn.outline {
+  background: var(--surface);
+  color: var(--foreground);
+  border-color: var(--border);
+  box-shadow: none;
+}
+.btn.outline:hover {
+  background: var(--surface-muted);
+}
+
+.btn.danger {
+  background: var(--error-600);
+}
+.btn.danger:hover {
+  background: var(--error-text);
+}
+
+.spinner {
+  width: 0.9rem;
+  height: 0.9rem;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--radius-full);
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2s;
+  }
+}

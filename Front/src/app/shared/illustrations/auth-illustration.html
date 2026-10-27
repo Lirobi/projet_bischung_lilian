@@ -1,0 +1,64 @@
+<svg viewBox="0 0 400 480" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="auth-bg" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" class="stop-from" />
+      <stop offset="1" class="stop-to" />
+    </linearGradient>
+  </defs>
+  <rect class="bg" width="400" height="480" fill="url(#auth-bg)" />
+  <circle class="halo" cx="350" cy="50" r="130" />
+  <circle class="halo" cx="30" cy="450" r="120" />
+
+  <g class="gear spin" style="transform-origin: 332px 396px">
+    <path class="gear-body" [attr.d]="bigGear" />
+    <circle class="gear-hole" cx="332" cy="396" r="19" />
+  </g>
+  <g class="gear spin reverse" style="transform-origin: 70px 76px">
+    <path class="gear-body" [attr.d]="smallGear" />
+    <circle class="gear-hole" cx="70" cy="76" r="12" />
+  </g>
+
+  <!-- carte : profil utilisateur -->
+  <g class="float f1">
+    <g class="shadow">
+      <rect class="card" x="70" y="110" width="250" height="150" rx="20" />
+      <circle class="avatar" cx="120" cy="160" r="26" />
+      <circle class="avatar-head" cx="120" cy="153" r="8" />
+      <path class="avatar-body" d="M104 177a16 13 0 0 1 32 0Z" />
+      <rect class="skeleton" x="162" y="144" width="110" height="12" rx="6" />
+      <rect class="skeleton" x="162" y="166" width="72" height="10" rx="5" />
+      <rect class="skeleton" x="94" y="204" width="202" height="12" rx="6" />
+      <rect class="accent" x="94" y="228" width="96" height="12" rx="6" />
+    </g>
+  </g>
+
+  <!-- carte : étapes validées -->
+  <g class="float f2">
+    <g class="shadow">
+      <rect class="card" x="150" y="290" width="170" height="104" rx="18" />
+      <g class="check" style="--d: 0.2s">
+        <circle class="check-bg" cx="178" cy="322" r="10" />
+        <path class="check-mark" d="M173 322l4 4 8-8" />
+      </g>
+      <g class="check" style="--d: 0.6s">
+        <circle class="check-bg" cx="178" cy="356" r="10" />
+        <path class="check-mark" d="M173 356l4 4 8-8" />
+      </g>
+      <rect class="skeleton" x="200" y="317" width="92" height="9" rx="4.5" />
+      <rect class="skeleton" x="200" y="351" width="64" height="9" rx="4.5" />
+    </g>
+  </g>
+
+  <!-- carte : sécurité -->
+  <g class="float f3">
+    <g class="shadow">
+      <rect class="card" x="36" y="304" width="92" height="92" rx="18" />
+      <path class="lock-body" d="M64 346h36v26a4 4 0 0 1-4 4H68a4 4 0 0 1-4-4Z" />
+      <path class="lock-arc" d="M71 346v-8a11 11 0 0 1 22 0v8" />
+      <circle class="lock-hole" cx="82" cy="358" r="3.5" />
+    </g>
+  </g>
+
+  <g class="plus float f2"><path d="M330 70v22M319 81h22" /></g>
+  <g class="plus float f3"><path d="M36 232v18M27 241h18" /></g>
+</svg>

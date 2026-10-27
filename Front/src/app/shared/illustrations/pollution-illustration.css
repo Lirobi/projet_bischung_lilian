@@ -1,0 +1,225 @@
+/* Thème : toutes les couleurs de l'illustration passent par ces variables */
+:host {
+  --panel-bg-from: var(--accent-500);
+  --panel-bg-to: var(--accent-700);
+  --panel-card: var(--surface);
+  --panel-skeleton: var(--accent-100);
+  --panel-map: var(--accent-50);
+  --panel-river: var(--accent-200);
+  --panel-drop: var(--accent-300);
+  --panel-halo: var(--surface);
+  --panel-ink: var(--surface);
+  --panel-dot: var(--good-500);
+  --panel-ok: var(--good-500);
+  --panel-alert: var(--error-500);
+  --panel-warning: var(--warning-500);
+  --panel-shadow: rgb(28 37 64 / 25%);
+}
+
+/* Bandeau sur mobile, colonne à droite dès 768px */
+:host {
+  display: block;
+  order: -1;
+  height: 11rem;
+  background: linear-gradient(160deg, var(--panel-bg-from), var(--panel-bg-to));
+  overflow: hidden;
+}
+
+svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.halo {
+  fill: var(--panel-halo);
+  opacity: 0.06;
+}
+.plus path {
+  stroke: var(--panel-ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  opacity: 0.6;
+}
+.dot-good {
+  fill: var(--panel-dot);
+}
+.drop {
+  fill: var(--panel-drop);
+}
+.live {
+  fill: var(--panel-ok);
+}
+
+.card-map,
+.card-alert,
+.card-list {
+  filter: drop-shadow(0 12px 18px var(--panel-shadow));
+}
+
+.river {
+  fill: none;
+  stroke: var(--panel-river);
+  stroke-width: 10;
+  stroke-linecap: round;
+}
+.flow {
+  fill: none;
+  stroke: var(--panel-ink);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 0.04 0.06;
+  animation: march 1.6s linear infinite;
+}
+
+.pin {
+  animation: bob 2s ease-in-out infinite;
+}
+.ping {
+  fill: var(--panel-alert);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ping 2s ease-out infinite;
+}
+.live {
+  animation: pulse 1.6s ease-in-out infinite;
+}
+.warn {
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+.check path {
+  fill: none;
+  stroke: var(--panel-ink);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.check {
+  animation: pop 3.2s ease-out var(--d) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.card {
+  fill: var(--panel-card);
+}
+.skeleton {
+  fill: var(--panel-skeleton);
+}
+.map-bg {
+  fill: var(--panel-map);
+}
+.pin-body {
+  fill: var(--panel-alert);
+}
+.pin-hole {
+  fill: var(--panel-ink);
+}
+.warn-body {
+  fill: var(--panel-warning);
+  stroke: var(--panel-warning);
+  stroke-width: 4;
+  stroke-linejoin: round;
+}
+.warn-mark {
+  stroke: var(--panel-ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.warn-dot {
+  fill: var(--panel-ink);
+}
+.check-bg {
+  fill: var(--panel-ok);
+}
+
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+.f2 {
+  animation-duration: 7.5s;
+  animation-delay: -2s;
+}
+.f3 {
+  animation-duration: 9s;
+  animation-delay: -4s;
+}
+
+@keyframes march {
+  to {
+    stroke-dashoffset: -0.1;
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+@keyframes ping {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+@keyframes pop {
+  0%,
+  10% {
+    transform: scale(0);
+  }
+  25%,
+  90% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  /* Le panneau est plus haut que large : l'illustration prend toute la largeur, centrée */
+  :host {
+    order: 0;
+    height: auto;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  svg {
+    height: auto;
+    overflow: visible;
+  }
+}

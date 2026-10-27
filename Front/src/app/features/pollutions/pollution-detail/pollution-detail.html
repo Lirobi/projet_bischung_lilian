@@ -1,0 +1,66 @@
+<a class="back" routerLink="/pollutions">← Toutes les pollutions</a>
+
+@if (pollution(); as p) {
+  <article class="card split">
+    <div class="content">
+      <header>
+        <span class="tag">{{ typeLabel() }}</span>
+        <h1>{{ p.title }}</h1>
+        <p class="meta">Observée le {{ observedAt() }} · {{ p.location }}</p>
+      </header>
+
+      <dl>
+        <div class="full">
+          <dt>Description</dt>
+          <dd class="description">{{ p.description }}</dd>
+        </div>
+        <div>
+          <dt>Latitude</dt>
+          <dd>{{ p.latitude | number: '1.0-6' }}</dd>
+        </div>
+        <div>
+          <dt>Longitude</dt>
+          <dd>{{ p.longitude | number: '1.0-6' }}</dd>
+        </div>
+        <div class="full">
+          <dt>Position</dt>
+          <dd>
+            <a [href]="mapUrl()" target="_blank" rel="noopener noreferrer">Voir sur OpenStreetMap</a>
+          </dd>
+        </div>
+        @if (p.photoUrl) {
+          <div class="full">
+            <dt>Photo</dt>
+            <dd class="url">
+              <a [href]="p.photoUrl" target="_blank" rel="noopener noreferrer">{{ p.photoUrl }}</a>
+              @if (photoBroken()) {
+                <span class="photo-error">Impossible de charger l'image.</span>
+              }
+            </dd>
+          </div>
+        }
+      </dl>
+
+      @if (error(); as message) {
+        <app-alert variant="error">{{ message }}</app-alert>
+      }
+
+      <div class="actions">
+        <app-button variant="danger" [loading]="deleting()" (click)="remove()">Supprimer</app-button>
+        <a class="link-btn" [routerLink]="['/pollutions', p.id, 'modifier']">Modifier</a>
+      </div>
+    </div>
+
+    @if (p.photoUrl && !photoBroken()) {
+      <figure class="photo">
+        <img [src]="p.photoUrl" [alt]="'Photo : ' + p.title" (error)="photoBroken.set(true)" />
+      </figure>
+    } @else {
+      <app-pollution-illustration />
+    }
+  </article>
+} @else if (error(); as message) {
+  <app-alert variant="error" title="Pollution introuvable">{{ message }}</app-alert>
+} @else {
+  <p class="loading">Chargement…</p>
+}
