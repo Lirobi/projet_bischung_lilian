@@ -1,0 +1,7 @@
+<main class="anim-page-in">
+  @if (pollution(); as declared) {
+    <app-pollution-recap [pollution]="declared" (restart)="restart()" />
+  } @else {
+    <app-pollution-form (declared)="onDeclared($event)" />
+  }
+</main>
