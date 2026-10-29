@@ -1,0 +1,24 @@
+# Blueprint Render pour l'API Node.js/TypeScript du projet Pollution
+# La base PostgreSQL est hébergée sur Coolify : DATABASE_URL est saisie dans le dashboard Render
+
+services:
+  - type: web
+    name: pollution-api
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: api-pollution
+    buildCommand: npm install --include=dev && npm run build
+    startCommand: npm run start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 22.22.3
+      - key: PORT
+        value: 3000
+      - key: DB_SSL
+        value: "false"
+      - key: DATABASE_URL
+        sync: false
