@@ -15,3 +15,9 @@ export interface User {
   firstName: string;
   email: string;
 }
+
+/** Corps envoyé à l'API pour se connecter (authentification fictive). */
+export interface LoginRequest {
+  login: string;
+  password: string;
+}

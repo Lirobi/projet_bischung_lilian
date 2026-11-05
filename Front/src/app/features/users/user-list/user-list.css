@@ -32,9 +32,17 @@ ul {
 
 .item {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+}
+
+.info {
+  display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  padding: 1rem 1.25rem;
+  min-width: 0;
 }
 
 .item strong {

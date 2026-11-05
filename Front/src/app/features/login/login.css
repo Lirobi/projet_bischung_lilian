@@ -1,0 +1,14 @@
+form,
+.done {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.done {
+  gap: 1.25rem;
+}
+
+app-button {
+  margin-top: 0.5rem;
+}

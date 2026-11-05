@@ -19,6 +19,7 @@ export class UserList implements OnInit {
   protected readonly users = signal<User[]>([]);
   protected readonly loading = signal(true);
   protected readonly error = signal<string | null>(null);
+  protected readonly deletingId = signal<number | null>(null);
 
   ngOnInit(): void {
     this.load();
@@ -39,6 +40,21 @@ export class UserList implements OnInit {
             : `Une erreur est survenue (code ${error.status}).`,
         );
         this.loading.set(false);
+      },
+    });
+  }
+
+  protected remove(user: User): void {
+    this.error.set(null);
+    this.deletingId.set(user.id);
+    this.api.delete(user.id).subscribe({
+      next: () => {
+        this.users.update((list) => list.filter((u) => u.id !== user.id));
+        this.deletingId.set(null);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.error.set(`La suppression a échoué (code ${error.status}).`);
+        this.deletingId.set(null);
       },
     });
   }

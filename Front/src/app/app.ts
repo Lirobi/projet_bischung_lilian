@@ -13,6 +13,7 @@ import { Logo } from './shared/ui/logo';
         <a routerLink="/pollutions" routerLinkActive="active">Pollutions</a>
         <a routerLink="/utilisateurs" routerLinkActive="active">Utilisateurs</a>
         <a routerLink="/inscription" routerLinkActive="active">Inscription</a>
+        <a routerLink="/connexion" routerLinkActive="active">Connexion</a>
       </nav>
     </header>
     <main class="anim-page-in">
@@ -38,6 +39,7 @@ import { Logo } from './shared/ui/logo';
     }
     nav {
       display: flex;
+      flex-wrap: wrap;
       gap: 0.25rem;
     }
     nav a {

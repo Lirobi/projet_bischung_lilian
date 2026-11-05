@@ -18,8 +18,13 @@
     <ul>
       @for (u of users(); track u.id) {
         <li class="card item">
-          <strong>{{ u.firstName }} {{ u.lastName }}</strong>
-          <span class="meta">{{ u.login }} · {{ u.email }}</span>
+          <div class="info">
+            <strong>{{ u.firstName }} {{ u.lastName }}</strong>
+            <span class="meta">{{ u.login }} · {{ u.email }}</span>
+          </div>
+          <app-button variant="danger" [loading]="deletingId() === u.id" (click)="remove(u)">
+            Supprimer
+          </app-button>
         </li>
       }
     </ul>
