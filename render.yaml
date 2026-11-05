@@ -3,11 +3,11 @@
 
 services:
   - type: web
-    name: pollution-api
+    name: projet-bischung-lilian-api
     runtime: node
     plan: free
     region: oregon
-    rootDir: api-pollution
+    rootDir: api
     buildCommand: npm install --include=dev && npm run build
     startCommand: npm run start
     healthCheckPath: /health
