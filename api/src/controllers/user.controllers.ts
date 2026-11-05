@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { randomBytes, scryptSync } from "crypto";
+import { randomBytes, scryptSync, timingSafeEqual } from "crypto";
 import { UniqueConstraintError, ValidationError } from "sequelize";
 import db from "../models";
 
@@ -14,6 +14,15 @@ const hashPassword = (password: string): string => {
   const salt = randomBytes(16).toString("hex");
   const hash = scryptSync(password, salt, 64).toString("hex");
   return `${salt}:${hash}`;
+};
+
+/** Compare un mot de passe saisi avec la valeur "sel:hash" stockée. */
+const checkPassword = (password: string, stored: string): boolean => {
+  const [salt, hash] = stored.split(":");
+  if (!salt || !hash) return false;
+  const expected = Buffer.from(hash, "hex");
+  const actual = scryptSync(password, salt, 64);
+  return expected.length === actual.length && timingSafeEqual(expected, actual);
 };
 
 /**
@@ -71,4 +80,54 @@ export const getAll = async (_req: Request, res: Response): Promise<void> => {
   }
 };
 
-export default { create, getAll };
+/**
+ * Supprime un utilisateur à partir de son id.
+ */
+export const remove = async (req: Request, res: Response): Promise<void> => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id <= 0) {
+    res.status(400).json({ message: "Identifiant invalide." });
+    return;
+  }
+
+  try {
+    const deleted = await Users.destroy({ where: { id } });
+    if (deleted === 0) {
+      res.status(404).json({ message: `Aucun utilisateur trouvé avec l'id=${id}.` });
+      return;
+    }
+    res.status(204).send();
+  } catch (err: unknown) {
+    res.status(500).json({
+      message: "Erreur lors de la suppression de l'utilisateur : " + toMessage(err)
+    });
+  }
+};
+
+/**
+ * Authentification fictive : vérifie le login et le mot de passe,
+ * renvoie l'utilisateur sans jeton ni session.
+ */
+export const login = async (req: Request, res: Response): Promise<void> => {
+  const { login: userLogin, password } = req.body ?? {};
+  if (typeof userLogin !== "string" || typeof password !== "string") {
+    res.status(400).json({ message: "Login et mot de passe obligatoires." });
+    return;
+  }
+
+  try {
+    const user = await Users.findOne({ where: { login: userLogin } });
+    if (!user || !checkPassword(password, user.get("password") as string)) {
+      res.status(401).json({ message: "Login ou mot de passe incorrect." });
+      return;
+    }
+    const { password: _password, ...data } = user.get({ plain: true });
+    res.status(200).json(data);
+  } catch (err: unknown) {
+    res.status(500).json({
+      message: "Erreur lors de la connexion : " + toMessage(err)
+    });
+  }
+};
+
+export default { create, getAll, remove, login };

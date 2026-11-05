@@ -10,5 +10,11 @@ export default (app: Application): void => {
   // Route GET /api/users
   router.get("/", userController.getAll);
 
+  // Route POST /api/users/login (authentification fictive)
+  router.post("/login", userController.login);
+
+  // Route DELETE /api/users/:id
+  router.delete("/:id", userController.remove);
+
   app.use("/api/users", router);
 };
