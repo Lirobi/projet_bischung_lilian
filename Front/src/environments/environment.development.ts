@@ -1,4 +1,4 @@
-// Développement (ng serve) : json-server lancé en local depuis le dossier api.
+// Développement (ng serve) : API Node.js lancée en local depuis le dossier api.
 export const environment = {
-  apiUrl: 'http://localhost:3000',
+  apiUrl: 'http://localhost:3000/api',
 };
