@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { User } from '../../core/models/user.model';
-import { SignUpApi } from '../../core/services/sign-up-api';
+import { UserApi } from '../../core/services/user-api';
 import { Alert } from '../../shared/ui/alert';
 import { Button } from '../../shared/ui/button';
 import { TextField } from '../../shared/ui/text-field';
@@ -35,7 +35,7 @@ type FieldName = 'login' | 'lastName' | 'firstName' | 'email' | 'password' | 'co
   styleUrl: './sign-up.css',
 })
 export class SignUp {
-  private readonly api = inject(SignUpApi);
+  private readonly api = inject(UserApi);
   private readonly fb = inject(NonNullableFormBuilder);
 
   protected readonly form = this.fb.group(
@@ -79,7 +79,7 @@ export class SignUp {
     this.errorMessage.set(null);
     this.loading.set(true);
     this.api
-      .signUp({ login: login.trim(), lastName, firstName, email: email.trim(), password })
+      .create({ login: login.trim(), lastName, firstName, email: email.trim(), password })
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
         next: (user) => this.createdUser.set(user),

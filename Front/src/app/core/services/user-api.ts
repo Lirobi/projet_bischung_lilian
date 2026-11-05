@@ -4,13 +4,17 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { SignUpRequest, User } from '../models/user.model';
 
-/** Encapsule les appels HTTP liés à l'inscription d'un utilisateur. */
+/** Appels HTTP de l'API des utilisateurs. L'URL de base dépend de l'environnement. */
 @Injectable({ providedIn: 'root' })
-export class SignUpApi {
+export class UserApi {
   private readonly http = inject(HttpClient);
   private readonly url = `${environment.apiUrl}/users`;
 
-  signUp(request: SignUpRequest): Observable<User> {
+  getAll(): Observable<User[]> {
+    return this.http.get<User[]>(this.url);
+  }
+
+  create(request: SignUpRequest): Observable<User> {
     return this.http.post<User>(this.url, request);
   }
 }

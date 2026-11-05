@@ -11,6 +11,7 @@ import { Logo } from './shared/ui/logo';
       <a routerLink="/pollutions" class="home" aria-label="Accueil"><app-logo /></a>
       <nav>
         <a routerLink="/pollutions" routerLinkActive="active">Pollutions</a>
+        <a routerLink="/utilisateurs" routerLinkActive="active">Utilisateurs</a>
         <a routerLink="/inscription" routerLinkActive="active">Inscription</a>
       </nav>
     </header>
@@ -24,9 +25,10 @@ import { Logo } from './shared/ui/logo';
       margin: 0 auto;
       padding: 1rem;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
+      gap: 0.5rem 1rem;
     }
     .home {
       text-decoration: none;

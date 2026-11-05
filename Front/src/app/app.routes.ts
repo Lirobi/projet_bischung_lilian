@@ -3,6 +3,7 @@ import { PollutionDetail } from './features/pollutions/pollution-detail/pollutio
 import { PollutionEditor } from './features/pollutions/pollution-editor/pollution-editor';
 import { PollutionList } from './features/pollutions/pollution-list/pollution-list';
 import { SignUpPage } from './features/sign-up/sign-up-page';
+import { UserList } from './features/users/user-list/user-list';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'pollutions' },
@@ -11,5 +12,6 @@ export const routes: Routes = [
   { path: 'pollutions/:id', component: PollutionDetail, title: 'Détail de la pollution' },
   { path: 'pollutions/:id/modifier', component: PollutionEditor, title: 'Modifier la pollution' },
   { path: 'inscription', component: SignUpPage, title: 'Inscription' },
+  { path: 'utilisateurs', component: UserList, title: 'Utilisateurs' },
   { path: '**', redirectTo: 'pollutions' },
 ];

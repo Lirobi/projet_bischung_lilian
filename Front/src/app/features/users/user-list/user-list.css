@@ -1,0 +1,56 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.count,
+.empty {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--foreground-muted);
+}
+
+.empty {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.25rem;
+}
+
+.item strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.meta {
+  overflow-wrap: anywhere;
+  font-size: 0.8125rem;
+  color: var(--foreground-muted);
+}
+
+app-alert app-button {
+  display: block;
+  margin-top: 0.75rem;
+}
