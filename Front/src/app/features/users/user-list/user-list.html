@@ -1,0 +1,32 @@
+<h1>Utilisateurs</h1>
+
+@if (error(); as message) {
+  <app-alert variant="error">
+    {{ message }}
+    <app-button variant="outline" (click)="load()">Réessayer</app-button>
+  </app-alert>
+}
+
+@if (loading()) {
+  <p class="empty">Chargement…</p>
+} @else if (!error()) {
+  <p class="count">{{ users().length }} utilisateur(s)</p>
+
+  @if (users().length === 0) {
+    <p class="empty">Aucun utilisateur inscrit.</p>
+  } @else {
+    <ul>
+      @for (u of users(); track u.id) {
+        <li class="card item">
+          <div class="info">
+            <strong>{{ u.firstName }} {{ u.lastName }}</strong>
+            <span class="meta">{{ u.login }} · {{ u.email }}</span>
+          </div>
+          <app-button variant="danger" [loading]="deletingId() === u.id" (click)="remove(u)">
+            Supprimer
+          </app-button>
+        </li>
+      }
+    </ul>
+  }
+}

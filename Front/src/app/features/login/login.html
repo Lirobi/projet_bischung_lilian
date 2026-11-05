@@ -1,0 +1,34 @@
+<app-auth-shell title="Connexion">
+  @if (user(); as u) {
+    <div class="done">
+      <app-alert variant="good" title="Connecté">
+        Bonjour {{ u.firstName }} {{ u.lastName }}.
+      </app-alert>
+      <app-button variant="outline" [block]="true" (click)="logout()">Se déconnecter</app-button>
+    </div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <app-text-field
+        label="Login"
+        formControlName="login"
+        autocomplete="username"
+        [error]="form.controls.login.touched && form.controls.login.invalid ? 'Login requis.' : null"
+      />
+      <app-text-field
+        label="Mot de passe"
+        type="password"
+        formControlName="password"
+        autocomplete="current-password"
+        [error]="form.controls.password.touched && form.controls.password.invalid ? 'Mot de passe requis.' : null"
+      />
+
+      @if (errorMessage(); as message) {
+        <app-alert variant="error">{{ message }}</app-alert>
+      }
+
+      <app-button type="submit" [block]="true" [loading]="loading()">
+        {{ loading() ? 'Connexion…' : 'Se connecter' }}
+      </app-button>
+    </form>
+  }
+</app-auth-shell>
