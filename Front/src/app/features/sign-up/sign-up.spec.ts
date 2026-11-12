@@ -1,6 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { SignUp } from './sign-up';
 
@@ -37,7 +38,7 @@ describe('SignUp feature', () => {
   };
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
+    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting(), provideRouter([])] });
     fixture = TestBed.createComponent(SignUp);
     el = fixture.nativeElement;
     http = TestBed.inject(HttpTestingController);
@@ -78,6 +79,22 @@ describe('SignUp feature', () => {
     expect(el.textContent).toContain('Compte créé');
     expect(el.textContent).toContain('#7');
     expect(el.querySelector('form')).toBeNull();
+  });
+
+  it('links to the login page without returnUrl by default', () => {
+    expect(el.querySelector('.alt a')!.getAttribute('href')).toBe('/connexion');
+  });
+
+  it('keeps an internal returnUrl on the login link', async () => {
+    fixture.componentRef.setInput('returnUrl', '/pollutions/nouvelle');
+    await fixture.whenStable();
+    expect(el.querySelector('.alt a')!.getAttribute('href')).toBe('/connexion?returnUrl=%2Fpollutions%2Fnouvelle');
+  });
+
+  it('drops an external returnUrl from the login link', async () => {
+    fixture.componentRef.setInput('returnUrl', '//example.com');
+    await fixture.whenStable();
+    expect(el.querySelector('.alt a')!.getAttribute('href')).toBe('/connexion');
   });
 
   it('shows the server message on a 409 and keeps the form', async () => {

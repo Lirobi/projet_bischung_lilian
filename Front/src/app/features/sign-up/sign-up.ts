@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -8,9 +8,11 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { User } from '../../core/models/user.model';
 import { UserApi } from '../../core/services/user-api';
+import { safeReturnUrl } from '../../shared/return-url';
 import { Alert } from '../../shared/ui/alert';
 import { Button } from '../../shared/ui/button';
 import { TextField } from '../../shared/ui/text-field';
@@ -30,11 +32,20 @@ type FieldName = 'login' | 'lastName' | 'firstName' | 'email' | 'password' | 'co
 @Component({
   selector: 'app-sign-up',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, TextField, Button, Alert],
+  imports: [ReactiveFormsModule, RouterLink, TextField, Button, Alert],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.css',
 })
 export class SignUp {
+  /** Page demandée avant la redirection vers l'inscription, transmise au lien vers la connexion. */
+  readonly returnUrl = input<string>();
+
+  /** Paramètres du lien vers la connexion : `returnUrl` conservé seulement si c'est une URL interne. */
+  protected readonly loginQuery = computed(() => {
+    const url = this.returnUrl();
+    return url && safeReturnUrl(url, '') ? { returnUrl: url } : {};
+  });
+
   private readonly api = inject(UserApi);
   private readonly fb = inject(NonNullableFormBuilder);
 

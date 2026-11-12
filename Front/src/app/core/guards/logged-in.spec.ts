@@ -12,10 +12,10 @@ describe('loggedInGuard', () => {
 
   beforeEach(() => sessionStorage.clear());
 
-  it("redirige un visiteur vers la connexion en gardant l'URL demandée", () => {
+  it("redirige un visiteur vers l'inscription en gardant l'URL demandée", () => {
     const result = run('/pollutions/nouvelle');
     expect(TestBed.inject(Router).serializeUrl(result as ReturnType<Router['createUrlTree']>)).toBe(
-      '/connexion?returnUrl=%2Fpollutions%2Fnouvelle',
+      '/inscription?returnUrl=%2Fpollutions%2Fnouvelle',
     );
   });
 

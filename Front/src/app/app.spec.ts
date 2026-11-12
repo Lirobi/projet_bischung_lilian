@@ -34,20 +34,29 @@ describe('App routes', () => {
     expect(harness.routeNativeElement?.querySelector('app-sign-up')).not.toBeNull();
   });
 
-  it('renvoie un visiteur de /utilisateurs vers la connexion avec returnUrl', async () => {
+  it("renvoie un visiteur de /utilisateurs vers l'inscription avec returnUrl", async () => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/utilisateurs');
 
-    expect(TestBed.inject(Router).url).toBe('/connexion?returnUrl=%2Futilisateurs');
+    expect(TestBed.inject(Router).url).toBe('/inscription?returnUrl=%2Futilisateurs');
   });
 
   it('protège la création et la modification de pollution', async () => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/pollutions/nouvelle');
-    expect(TestBed.inject(Router).url).toBe('/connexion?returnUrl=%2Fpollutions%2Fnouvelle');
+    expect(TestBed.inject(Router).url).toBe('/inscription?returnUrl=%2Fpollutions%2Fnouvelle');
 
     await harness.navigateByUrl('/pollutions/3/modifier');
-    expect(TestBed.inject(Router).url).toBe('/connexion?returnUrl=%2Fpollutions%2F3%2Fmodifier');
+    expect(TestBed.inject(Router).url).toBe('/inscription?returnUrl=%2Fpollutions%2F3%2Fmodifier');
+  });
+
+  it("garde returnUrl dans le lien « Se connecter » de l'inscription", async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/utilisateurs');
+
+    expect(harness.routeNativeElement?.querySelector('.alt a')?.getAttribute('href')).toBe(
+      '/connexion?returnUrl=%2Futilisateurs',
+    );
   });
 
   it('renvoie un utilisateur connecté de /connexion vers /pollutions', async () => {

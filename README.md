@@ -38,7 +38,7 @@ L'application est servie sur `http://localhost:4200` et appelle l'API sur `http:
 ## Routes, guards et optimisation (TP05)
 
 - Lazy loading : chaque page est chargée à la demande (`loadComponent`), les routes `/pollutions` sont regroupées dans `pollutions.routes.ts` (`loadChildren`).
-- `loggedInGuard` protège `/utilisateurs`, `/pollutions/nouvelle` et `/pollutions/:id/modifier` ; un visiteur est renvoyé vers `/connexion?returnUrl=...` et y revient après sa connexion.
+- `loggedInGuard` protège `/utilisateurs`, `/pollutions/nouvelle` et `/pollutions/:id/modifier` ; un visiteur est renvoyé vers `/inscription?returnUrl=...` ; le lien « Déjà inscrit ? Se connecter » garde `returnUrl`, et la connexion ramène à la page demandée (URL interne uniquement).
 - `guestGuard` renvoie un utilisateur connecté de `/connexion` et `/inscription` vers `/pollutions`.
 - `unsavedChangesGuard` (`canDeactivate`) demande confirmation avant de quitter l'éditeur de pollution avec une saisie non enregistrée.
 - Tous les composants sont en `ChangeDetectionStrategy.OnPush`, leur état passe par des signals.

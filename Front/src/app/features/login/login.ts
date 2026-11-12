@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { Auth } from '../../core/services/auth';
 import { UserApi } from '../../core/services/user-api';
+import { safeReturnUrl } from '../../shared/return-url';
 import { Alert } from '../../shared/ui/alert';
 import { AuthShell } from '../../shared/ui/auth-shell';
 import { Button } from '../../shared/ui/button';
@@ -62,9 +63,8 @@ export class Login {
       });
   }
 
-  /** Seules les URL internes sont acceptées, pour éviter une redirection vers un autre site. */
+  /** Destination après connexion : `returnUrl` si c'est une URL interne, sinon les pollutions. */
   private destination(): string {
-    const url = this.returnUrl();
-    return url && url.startsWith('/') && !url.startsWith('//') ? url : '/pollutions';
+    return safeReturnUrl(this.returnUrl());
   }
 }
