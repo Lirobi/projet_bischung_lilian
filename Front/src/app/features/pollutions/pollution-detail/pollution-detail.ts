@@ -9,13 +9,14 @@ import { formatDateFr } from '../../../shared/format';
 import { PollutionIllustration } from '../../../shared/illustrations/pollution-illustration';
 import { Alert } from '../../../shared/ui/alert';
 import { Button } from '../../../shared/ui/button';
+import { ConfirmDialog } from '../../../shared/ui/confirm-dialog';
 import { httpErrorMessage } from '../http-error-message';
 
 /** Détail d'une pollution (/pollutions/:id), avec modification et suppression. */
 @Component({
   selector: 'app-pollution-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DecimalPipe, RouterLink, PollutionIllustration, Alert, Button],
+  imports: [DecimalPipe, RouterLink, PollutionIllustration, Alert, Button, ConfirmDialog],
   templateUrl: './pollution-detail.html',
   styleUrl: './pollution-detail.css',
 })
@@ -28,6 +29,7 @@ export class PollutionDetail implements OnInit {
   protected readonly pollution = signal<Pollution | null>(null);
   protected readonly error = signal<string | null>(null);
   protected readonly deleting = signal(false);
+  protected readonly confirmingDelete = signal(false);
   /** Passe à true si l'URL fournie ne pointe pas vers une image chargeable. */
   protected readonly photoBroken = signal(false);
 
@@ -54,6 +56,7 @@ export class PollutionDetail implements OnInit {
   }
 
   protected remove(): void {
+    this.confirmingDelete.set(false);
     this.error.set(null);
     this.deleting.set(true);
     this.api

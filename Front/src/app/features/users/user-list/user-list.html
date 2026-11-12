@@ -22,11 +22,15 @@
             <strong>{{ u.firstName }} {{ u.lastName }}</strong>
             <span class="meta">{{ u.login }} · {{ u.email }}</span>
           </div>
-          <app-button variant="danger" [loading]="deletingId() === u.id" (click)="remove(u)">
+          <app-button variant="danger" [loading]="deletingId() === u.id" (click)="pendingDelete.set(u)">
             Supprimer
           </app-button>
         </li>
       }
     </ul>
   }
+}
+
+@if (pendingDelete(); as u) {
+  <app-confirm-dialog message="Supprimer cet utilisateur ?" (confirmed)="remove(u)" (cancelled)="pendingDelete.set(null)" />
 }
