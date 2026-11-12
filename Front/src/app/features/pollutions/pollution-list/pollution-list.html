@@ -71,7 +71,7 @@
           <app-button
             variant="danger"
             [loading]="deletingId() === p.id"
-            (click)="remove(p)"
+            (click)="pendingDelete.set(p)"
           >
             Supprimer
           </app-button>
@@ -79,4 +79,8 @@
       }
     </ul>
   }
+}
+
+@if (pendingDelete(); as p) {
+  <app-confirm-dialog message="Supprimer cette pollution ?" (confirmed)="remove(p)" (cancelled)="pendingDelete.set(null)" />
 }
