@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { loggedInGuard } from './core/guards/logged-in';
 import { Login } from './features/login/login';
 import { PollutionDetail } from './features/pollutions/pollution-detail/pollution-detail';
 import { PollutionEditor } from './features/pollutions/pollution-editor/pollution-editor';
@@ -16,6 +17,6 @@ export const routes: Routes = [
   { path: 'pollutions/:id/modifier', component: PollutionEditor, title: 'Modifier la pollution' },
   { path: 'inscription', component: SignUpPage, title: 'Inscription' },
   { path: 'connexion', component: Login, title: 'Connexion' },
-  { path: 'utilisateurs', component: UserList, title: 'Utilisateurs' },
+  { path: 'utilisateurs', component: UserList, title: 'Utilisateurs', canActivate: [loggedInGuard] },
   { path: '**', redirectTo: 'pollutions' },
 ];
