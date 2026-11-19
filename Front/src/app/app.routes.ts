@@ -1,22 +1,28 @@
 import { Routes } from '@angular/router';
+import { guestGuard } from './core/guards/guest';
 import { loggedInGuard } from './core/guards/logged-in';
-import { Login } from './features/login/login';
-import { PollutionDetail } from './features/pollutions/pollution-detail/pollution-detail';
-import { PollutionEditor } from './features/pollutions/pollution-editor/pollution-editor';
-import { PollutionLevels } from './features/pollutions/pollution-levels/pollution-levels';
-import { PollutionList } from './features/pollutions/pollution-list/pollution-list';
-import { SignUpPage } from './features/sign-up/sign-up-page';
-import { UserList } from './features/users/user-list/user-list';
 
+// Chaque page est chargée à la demande (lazy loading) : son code n'est téléchargé qu'à la première visite.
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'pollutions' },
-  { path: 'pollutions', component: PollutionList, title: 'Pollutions' },
-  { path: 'pollutions/niveaux', component: PollutionLevels, title: 'Niveaux de pollution' },
-  { path: 'pollutions/nouvelle', component: PollutionEditor, title: 'Déclarer une pollution' },
-  { path: 'pollutions/:id', component: PollutionDetail, title: 'Détail de la pollution' },
-  { path: 'pollutions/:id/modifier', component: PollutionEditor, title: 'Modifier la pollution' },
-  { path: 'inscription', component: SignUpPage, title: 'Inscription' },
-  { path: 'connexion', component: Login, title: 'Connexion' },
-  { path: 'utilisateurs', component: UserList, title: 'Utilisateurs', canActivate: [loggedInGuard] },
+  { path: 'pollutions', loadChildren: () => import('./features/pollutions/pollutions.routes').then((m) => m.POLLUTION_ROUTES) },
+  {
+    path: 'inscription',
+    loadComponent: () => import('./features/sign-up/sign-up-page').then((m) => m.SignUpPage),
+    title: 'Inscription',
+    canActivate: [guestGuard],
+  },
+  {
+    path: 'connexion',
+    loadComponent: () => import('./features/login/login').then((m) => m.Login),
+    title: 'Connexion',
+    canActivate: [guestGuard],
+  },
+  {
+    path: 'utilisateurs',
+    loadComponent: () => import('./features/users/user-list/user-list').then((m) => m.UserList),
+    title: 'Utilisateurs',
+    canActivate: [loggedInGuard],
+  },
   { path: '**', redirectTo: 'pollutions' },
 ];

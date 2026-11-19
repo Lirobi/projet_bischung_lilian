@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { AuthShell } from '../../shared/ui/auth-shell';
 import { SignUp } from './sign-up';
 
@@ -9,8 +9,11 @@ import { SignUp } from './sign-up';
   imports: [AuthShell, SignUp],
   template: `
     <app-auth-shell title="Inscription">
-      <app-sign-up />
+      <app-sign-up [returnUrl]="returnUrl()" />
     </app-auth-shell>
   `,
 })
-export class SignUpPage {}
+export class SignUpPage {
+  /** Page demandée avant la redirection vers l'inscription (query param `returnUrl`). */
+  readonly returnUrl = input<string>();
+}

@@ -110,6 +110,11 @@ export class PollutionForm {
     });
   }
 
+  /** Vrai si l'utilisateur a modifié le formulaire depuis son chargement. */
+  isDirty(): boolean {
+    return this.form.dirty;
+  }
+
   /** Vrai si le champ est invalide et que l'utilisateur y a déjà touché. */
   protected showError(name: keyof typeof this.form.controls): boolean {
     const control = this.form.controls[name];

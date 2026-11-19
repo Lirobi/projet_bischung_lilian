@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Auth } from './core/services/auth';
 import { Logo } from './shared/ui/logo';
 
 @Component({
@@ -12,8 +13,12 @@ import { Logo } from './shared/ui/logo';
       <nav>
         <a routerLink="/pollutions" routerLinkActive="active">Pollutions</a>
         <a routerLink="/utilisateurs" routerLinkActive="active">Utilisateurs</a>
-        <a routerLink="/inscription" routerLinkActive="active">Inscription</a>
-        <a routerLink="/connexion" routerLinkActive="active">Connexion</a>
+        @if (auth.isLoggedIn()) {
+          <button type="button" (click)="logout()">Déconnexion</button>
+        } @else {
+          <a routerLink="/inscription" routerLinkActive="active">Inscription</a>
+          <a routerLink="/connexion" routerLinkActive="active">Connexion</a>
+        }
       </nav>
     </header>
     <main class="anim-page-in">
@@ -42,7 +47,8 @@ import { Logo } from './shared/ui/logo';
       flex-wrap: wrap;
       gap: 0.25rem;
     }
-    nav a {
+    nav a,
+    nav button {
       padding: 0.4rem 0.75rem;
       border-radius: var(--radius-md);
       color: var(--foreground-muted);
@@ -50,7 +56,14 @@ import { Logo } from './shared/ui/logo';
       font-weight: 500;
       text-decoration: none;
     }
-    nav a:hover {
+    nav button {
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    nav a:hover,
+    nav button:hover {
       background: var(--surface-muted);
     }
     nav a.active {
@@ -64,4 +77,12 @@ import { Logo } from './shared/ui/logo';
     }
   `,
 })
-export class App {}
+export class App {
+  protected readonly auth = inject(Auth);
+  private readonly router = inject(Router);
+
+  protected logout(): void {
+    this.auth.logout();
+    this.router.navigateByUrl('/connexion');
+  }
+}

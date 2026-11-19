@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, input, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { PollutionInput } from '../../../core/models/pollution.model';
+import { HasUnsavedChanges } from '../../../core/guards/unsaved-changes';
 import { PollutionApi } from '../../../core/services/pollution-api';
 import { Alert } from '../../../shared/ui/alert';
 import { httpErrorMessage } from '../http-error-message';
@@ -40,7 +41,7 @@ import { PollutionForm } from '../pollution-form/pollution-form';
     }
   `,
 })
-export class PollutionEditor implements OnInit {
+export class PollutionEditor implements OnInit, HasUnsavedChanges {
   /** Paramètre de route, renseigné par `withComponentInputBinding`. */
   readonly id = input<string>();
 
@@ -51,6 +52,15 @@ export class PollutionEditor implements OnInit {
   protected readonly loadError = signal<string | null>(null);
   protected readonly saving = signal(false);
   protected readonly saveError = signal<string | null>(null);
+
+  private readonly pollutionForm = viewChild(PollutionForm);
+  /** Passe à vrai une fois l'enregistrement réussi, pour ne pas demander de confirmation en repartant. */
+  private saved = false;
+
+  /** Utilisé par `unsavedChangesGuard` avant de quitter la page. */
+  hasUnsavedChanges(): boolean {
+    return !this.saved && (this.pollutionForm()?.isDirty() ?? false);
+  }
 
   ngOnInit(): void {
     const id = this.id();
@@ -69,7 +79,10 @@ export class PollutionEditor implements OnInit {
     this.saveError.set(null);
     this.saving.set(true);
     request.pipe(finalize(() => this.saving.set(false))).subscribe({
-      next: (saved) => this.router.navigate(['/pollutions', saved.id]),
+      next: (saved) => {
+        this.saved = true;
+        this.router.navigate(['/pollutions', saved.id]);
+      },
       error: (error: HttpErrorResponse) => this.saveError.set(httpErrorMessage(error)),
     });
   }

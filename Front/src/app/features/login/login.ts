@@ -1,9 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { Auth } from '../../core/services/auth';
 import { UserApi } from '../../core/services/user-api';
+import { safeReturnUrl } from '../../shared/return-url';
 import { Alert } from '../../shared/ui/alert';
 import { AuthShell } from '../../shared/ui/auth-shell';
 import { Button } from '../../shared/ui/button';
@@ -18,7 +20,11 @@ import { TextField } from '../../shared/ui/text-field';
   styleUrl: './login.css',
 })
 export class Login {
+  /** Page demandée avant la redirection vers la connexion (query param `returnUrl`). */
+  readonly returnUrl = input<string>();
+
   private readonly api = inject(UserApi);
+  private readonly router = inject(Router);
   private readonly auth = inject(Auth);
   private readonly fb = inject(NonNullableFormBuilder);
 
@@ -28,7 +34,6 @@ export class Login {
   });
 
   protected readonly loading = signal(false);
-  protected readonly user = this.auth.user;
   protected readonly errorMessage = signal<string | null>(null);
 
   protected onSubmit(): void {
@@ -43,7 +48,10 @@ export class Login {
       .login({ login: login.trim(), password })
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
-        next: (user) => this.auth.login(user),
+        next: (user) => {
+          this.auth.login(user);
+          this.router.navigateByUrl(this.destination());
+        },
         error: (error: HttpErrorResponse) =>
           this.errorMessage.set(
             error.status === 0
@@ -55,9 +63,8 @@ export class Login {
       });
   }
 
-  protected logout(): void {
-    this.form.reset();
-    this.auth.logout();
-    this.errorMessage.set(null);
+  /** Destination après connexion : `returnUrl` si c'est une URL interne, sinon les pollutions. */
+  private destination(): string {
+    return safeReturnUrl(this.returnUrl());
   }
 }

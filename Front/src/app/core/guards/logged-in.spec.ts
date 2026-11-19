@@ -7,14 +7,16 @@ import { loggedInGuard } from './logged-in';
 describe('loggedInGuard', () => {
   const user: User = { id: 1, login: 'ada', lastName: 'Lovelace', firstName: 'Ada', email: 'ada@example.com' };
 
-  const run = () =>
-    TestBed.runInInjectionContext(() => loggedInGuard({} as ActivatedRouteSnapshot, {} as RouterStateSnapshot));
+  const run = (url = '/utilisateurs') =>
+    TestBed.runInInjectionContext(() => loggedInGuard({} as ActivatedRouteSnapshot, { url } as RouterStateSnapshot));
 
   beforeEach(() => sessionStorage.clear());
 
-  it("redirige un visiteur vers l'inscription", () => {
-    const result = run();
-    expect(TestBed.inject(Router).serializeUrl(result as ReturnType<Router['createUrlTree']>)).toBe('/inscription');
+  it("redirige un visiteur vers l'inscription en gardant l'URL demandée", () => {
+    const result = run('/pollutions/nouvelle');
+    expect(TestBed.inject(Router).serializeUrl(result as ReturnType<Router['createUrlTree']>)).toBe(
+      '/inscription?returnUrl=%2Fpollutions%2Fnouvelle',
+    );
   });
 
   it('laisse passer un utilisateur connecté', () => {
