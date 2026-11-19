@@ -46,9 +46,17 @@
       }
 
       <div class="actions">
-        <app-button variant="danger" [loading]="deleting()" (click)="remove()">Supprimer</app-button>
+        <app-button variant="danger" [loading]="deleting()" (click)="confirmingDelete.set(true)">Supprimer</app-button>
         <a class="link-btn" [routerLink]="['/pollutions', p.id, 'modifier']">Modifier</a>
       </div>
+
+      @if (confirmingDelete()) {
+        <app-confirm-dialog
+          message="Supprimer cette pollution ?"
+          (confirmed)="remove()"
+          (cancelled)="confirmingDelete.set(false)"
+        />
+      }
     </div>
 
     @if (p.photoUrl && !photoBroken()) {

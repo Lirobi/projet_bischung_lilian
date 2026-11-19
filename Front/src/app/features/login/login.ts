@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
-import { User } from '../../core/models/user.model';
+import { Auth } from '../../core/services/auth';
 import { UserApi } from '../../core/services/user-api';
 import { Alert } from '../../shared/ui/alert';
 import { AuthShell } from '../../shared/ui/auth-shell';
@@ -19,6 +19,7 @@ import { TextField } from '../../shared/ui/text-field';
 })
 export class Login {
   private readonly api = inject(UserApi);
+  private readonly auth = inject(Auth);
   private readonly fb = inject(NonNullableFormBuilder);
 
   protected readonly form = this.fb.group({
@@ -27,7 +28,7 @@ export class Login {
   });
 
   protected readonly loading = signal(false);
-  protected readonly user = signal<User | null>(null);
+  protected readonly user = this.auth.user;
   protected readonly errorMessage = signal<string | null>(null);
 
   protected onSubmit(): void {
@@ -42,7 +43,7 @@ export class Login {
       .login({ login: login.trim(), password })
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
-        next: (user) => this.user.set(user),
+        next: (user) => this.auth.login(user),
         error: (error: HttpErrorResponse) =>
           this.errorMessage.set(
             error.status === 0
@@ -56,7 +57,7 @@ export class Login {
 
   protected logout(): void {
     this.form.reset();
-    this.user.set(null);
+    this.auth.logout();
     this.errorMessage.set(null);
   }
 }

@@ -4,12 +4,13 @@ import { User } from '../../../core/models/user.model';
 import { UserApi } from '../../../core/services/user-api';
 import { Alert } from '../../../shared/ui/alert';
 import { Button } from '../../../shared/ui/button';
+import { ConfirmDialog } from '../../../shared/ui/confirm-dialog';
 
 /** Liste des utilisateurs inscrits (/utilisateurs). */
 @Component({
   selector: 'app-user-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [Alert, Button],
+  imports: [Alert, Button, ConfirmDialog],
   templateUrl: './user-list.html',
   styleUrl: './user-list.css',
 })
@@ -20,6 +21,7 @@ export class UserList implements OnInit {
   protected readonly loading = signal(true);
   protected readonly error = signal<string | null>(null);
   protected readonly deletingId = signal<number | null>(null);
+  protected readonly pendingDelete = signal<User | null>(null);
 
   ngOnInit(): void {
     this.load();
@@ -45,6 +47,7 @@ export class UserList implements OnInit {
   }
 
   protected remove(user: User): void {
+    this.pendingDelete.set(null);
     this.error.set(null);
     this.deletingId.set(user.id);
     this.api.delete(user.id).subscribe({

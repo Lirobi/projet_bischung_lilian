@@ -11,6 +11,7 @@ import { PollutionApi } from '../../../core/services/pollution-api';
 import { formatDateFr } from '../../../shared/format';
 import { Alert } from '../../../shared/ui/alert';
 import { Button } from '../../../shared/ui/button';
+import { ConfirmDialog } from '../../../shared/ui/confirm-dialog';
 import { httpErrorMessage } from '../http-error-message';
 import { EMPTY_FILTER, PollutionFilter, filterPollutions, isFilterActive } from '../pollution-filter';
 
@@ -18,7 +19,7 @@ import { EMPTY_FILTER, PollutionFilter, filterPollutions, isFilterActive } from 
 @Component({
   selector: 'app-pollution-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, Alert, Button],
+  imports: [RouterLink, Alert, Button, ConfirmDialog],
   templateUrl: './pollution-list.html',
   styleUrl: './pollution-list.css',
 })
@@ -34,6 +35,8 @@ export class PollutionList implements OnInit {
   protected readonly error = signal<string | null>(null);
   /** Id de la pollution en cours de suppression. */
   protected readonly deletingId = signal<number | null>(null);
+  /** Pollution en attente de confirmation de suppression. */
+  protected readonly pendingDelete = signal<Pollution | null>(null);
 
   protected readonly filter = signal<PollutionFilter>(EMPTY_FILTER);
   protected readonly filtered = computed(() => filterPollutions(this.pollutions(), this.filter()));
@@ -59,6 +62,7 @@ export class PollutionList implements OnInit {
   }
 
   protected remove(pollution: Pollution): void {
+    this.pendingDelete.set(null);
     this.error.set(null);
     this.deletingId.set(pollution.id);
     this.api.delete(pollution.id).subscribe({

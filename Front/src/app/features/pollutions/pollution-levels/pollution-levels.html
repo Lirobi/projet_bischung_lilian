@@ -1,0 +1,10 @@
+<h1>Niveaux de pollution</h1>
+
+<ul>
+  @for (index of indices; track index) {
+    <li class="card item" [appHighlightPollution]="index">
+      <strong>{{ index }}</strong>
+      <span>{{ index | pollutionLevel }}</span>
+    </li>
+  }
+</ul>
